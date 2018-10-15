@@ -1,0 +1,242 @@
+\section{Introduction}
+
+The following notes are from Introduction to Statistical Learning by Gareth James, Daniela Witten, Trevor Hastie and Robert Tibshirani. For updated document and Python code see https://github.com/johnwoodill/Notes-Intro-to-Stat-Learning. For online book content see www.statlearning.com
+
+\section{Statistical Learning} 
+
+\subsection{Overview}
+
+Suppose we observe a quantitative response $Y$ with different predictors, $X_1, X_2, ... , X_p$. We assume there is some relationship between $Y = X_p$. A general form is,
+
+$$
+Y = f(x) + \epsilon
+$$
+
+\noindent where $f$ is some systematic information that $X_p$ provides about $Y$. $\epsilon$ is the random error term, which is \textbf{independent} of $X_p$ and mean zero.
+
+Statistical learning refers to approaches that estimate $f$ where we can estimate to provide predictions or inference.
+
+\subsubsection{Predictions}
+
+Predictions assume a set of inputs $X_p$ are available but outputs $Y$ may not be. Predictions follow the form, 
+
+$$
+\hat{Y} = \hat{f(X)}
+$$ 
+
+\noindent The accuracy of $\hat{Y}$ by predicting $\hat{f(X)}$ is not perfect, which introductions an error of two quantities:
+
+\textbf{Reducible Error}: Error can be improved with appropriate modeling strategies.
+
+\textbf{Irreducible Error}: variability of $\epsilon$ affects the accuracy of the prediction; thus, cannot reduce the error introduced by $\epsilon$. The error may contain (1) unmeasured variables, (2) unmeasured variation.
+
+Derive reducible and irreducible errors by simply differencing $Y - \hat{Y}$, then find mean squared.
+
+
+$$
+E(Y - \hat{Y})^2 = E[f(X) + \epsilon - \hat{f}(\hat{X})]^2
+$$
+
+$$
+E(Y - \hat{Y})^2 = \underbrace{[f(X) - \hat{f}(X)]^2}_{\text{Reducible}} + \underbrace{Var(\epsilon)}_{\text{Irreducible}}
+$$
+
+Thus, the irreducible error depends on the variation in the error. Statistical Learning focuses on improving (minimizing) the reducible error. Note that the irreducible error will always provide an upper bound on the accurary of the prediction, which is almost always unknown in practice
+
+\subsubsection{Inference}
+
+Inference relates to understanding the relationship between $X$ and $Y$, or how $Y$ changes in response to $X$.
+
+\begin{itemize}
+\item Which predictors are associated with the response?
+\item What is the relationship between the response and each predictor?
+\item Can the relationship between Y and each predictor be adequately summarized using a linear equation, or is the relationship more complicated?
+\end{itemize}
+
+\subsubsection{Estimating $f()$}
+
+Our goal is to apply statistical learning method to train data to estimate and unknown function $f$. Methods include parametric and nonparametric methods.
+
+\noindent \textbf{Parametric}: Methods that use distributional assumptions are called parametric methods, because we estimate the parameters of the distribution assumed for the data. In OLS, assumptions about function form are linear with fixed parameters. No matter how much data you have, there will always be fixed parameters.
+
+Examples:
+\begin{itemize}
+	\item Logistic Regression
+	\item Linear Discriminant Analysis
+	\item Perceptron
+	\item Naive Bayes
+	\item Simple Neural Networks
+\end{itemize}
+
+Advantage: simplifies estimating $f()$ because it is easier to estimate a set of parameters, $\beta_0, \beta_1$.
+
+Disadvantage: model does not usually match $f()$.
+
+\noindent \textbf{Non-Parametric}: Methods do not make explicit assupmtions about the functional form of $f()$. Goal is to get as close to the data points as possible without being to rough or widdly.
+
+Examples:
+\begin{itemize}
+	\item k-Nearest Neighbors
+	\item Decision Trees like CART and C4.5
+	\item Support Vector Machines
+\end{itemize}
+
+Advantange: potential to accurately fit a wider range of possible shapes for $f()$.
+
+Disadvantage: do not reduce the problem of estimating $f$ to a small number of parameters, thus a large number of observations is required to accurately estimate $f$.
+
+\subsubsection{Prediction Accuracy versus Model Interpretability}
+
+\textit{Why would we ever
+choose to use a more restrictive method instead of a very flexible approach?}
+
+Restrictive models, such as linear models, are more interpretable. In contrast, flexible approaches, such as splines, can provide complicated estimates of $f()$ that may improve prediction accuracy.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/tradeoff}
+\end{center}
+
+The choice of modeling strategy comes down to the end goal: prediction or inference. Less flexible models are easy to interpret, thus prefered when the goal is inference. If prediction is prefered, then more flexible models may be prefered -- although, more flexible models are not always prefered for prediction acurracy due to overfitting.
+
+\subsubsection{Supervised Versus Unsupervised Learning}
+
+\noindent \textbf{Supervised}: Each observation of the predictor measurements $x_i$ there is an associated response measurement $y_i$. Goal is to fit a model that relates to the response predictors with an aim to accurately predict the response variable in the future.
+
+Examples:
+\begin{itemize}
+\item Linear Regression
+\item Logistic Regression
+\item GAM
+\item Boosting
+\item Support Vector Machines
+\end{itemize}
+
+\noindent \textbf{Unsupervised}: Observations of the predictor $x_i$ does not contain a response variable, $y$. 
+
+Examples:
+\begin{itemize}
+\item Cluster Analysis
+\item PCA
+\end{itemize}
+
+\subsubsection{Regression versus Classification Problems}
+
+Variables are characterized by quantitative or qualitative (categorical). Quantitative values are numerical whereas qualitative variables take values in classes or categories.
+
+\begin{itemize}
+\item Regression Analysis: Uses quantitative variables
+\item Classification Analysis: Uses qualitatie variables
+\end{itemize}
+
+We select statistical learning methods based on the response variable being quantitative or qualitative. 
+
+\noindent \textbf{Note}: distribution of predictors being qualitative or quantitative is less important. 
+
+\subsection{Assessing Model Accurary}
+
+\subsubsection{Measuring Quality of Fit}
+
+To assess performance of statistical learning methods, we need to quantify the extent to which the predicted response value is close to the true value. The most commonly-used measure is mean-squared-error (MSE)
+
+$$
+MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{f}(x_i))^2
+$$
+
+Calculating training MSE (MSE on training data) doesn't tell us much about out-of-sample performace, which is prefered. Suppose $(x_0, y_0)$ are previously unseen test observations. The test MSE is
+
+$$
+Ave (y_0 - \hat{f}(x_0))^2)
+$$
+
+It is important to note that minimizing the training data provides no guarantee that the method will also minimize the test data. 
+
+There is a trade-off between inflexibility versus flexible models. Degrees of freedom define the flexibility of a curve. A more restricted (smoother) curve has fewer degrees of freedom than a wiggly curve. As flexibility increases training MSE declines monotonically. 
+
+In the figure below,  as the flexibility of the statistical
+learning method increases, we observe a monotone decrease in the training MSE and a U-shape in the test MSE.  As model flexibility
+increases, training MSE will decrease, but the test MSE may not.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/tradeoff_MSE}
+\end{center}
+
+\noindent \textbf{Note}: Overfitting occurs when a small training MSE but a large test MSE exists. This happens because the training model is find patterns in the data and not establishing the signal.
+
+\subsubsection{The Bias-Variance Trade-Off}
+
+The U-shaped observed in the test MSE curve is a result of two competing properties in statistical learning:
+
+The test MSE, for a given value $x_0$, can be decomposed into the sum of three fundamental quantities: variance of $\hat{f}(x_0)$, the squared bias of $\hat{f}(x_0)$, and the variance of the error terms $\epsilon$,
+
+$$
+\underbrace{E(y_0 - \hat{f}(x_0))^2}_{\text{Expected Test MSE}} = Var(\hat{f}(x_0)) + [Bias(\hat{f}(x_0))]^2 + Var(\epsilon)
+$$
+
+To minimize the expected test error, we need to select a stat. method that achieves a low variance and a low bias. 
+
+\begin{itemize}
+\item Variance: amount by which $\hat{f}$ changes if estimated using different raining data.
+\item Bias:error that is introduced by approximating a real-life problem
+\end{itemize}
+
+Variance between training data sets shouldn't change $\hat{f}$ too much; however, methods that are more flexible have higher variance that will shift the MSE larger whereas restricted methods have low variance and will only cause small shifts.
+
+In terms of bias, the inverse is true. Restricted methods do not identify the true response variable, which results in large bias; however, flexible methods are usually better at predicting the true response variable which provides less bias.
+
+\noindent \textbf{Bias-Variance Trade-Off}
+\begin{itemize}
+\item Flexible Methods: Variance increases and bias will decrease MSE
+\item Restricted Methods: Variance decreases and bias will increases MSE
+\end{itemize}
+
+\textbf{Note}: The challenge lies in finding a method for which both the variance and the squared bias are low.
+
+\subsubsection{Classification Strategy}
+
+Model accuracy transfers over to classification problems. The most common approach is to quantify the accuracy of $\hat{f}$ using a training error rate, or the proportion of mistakes that are made to the training observations,
+
+$$
+\frac{1}{n} \sum_{i=1}^n I(y_i \neq \hat{y_i})
+$$
+
+\noindent where $I(y_i \neq \hat{y_i})$ is an indicator variable that equals 1 if $y_i \neq \hat{y}_i$, and zero if $y_i = \hat{y}_i$. If $I(y_i \neq \hat{y_i})$ = 0, then the observation was classified correctly. The test error is calculated as,
+
+$$
+Ave(I(Y-0 \neq \hat{y}_0))
+$$
+
+\noindent \textbf{The Bayes Classifer}
+
+The error rate acn be classified by assigning each observation to themost likely class, given its predictor values.The Bayes Classifer is,
+
+$$
+Pr(Y = j | X = x_0)
+$$
+
+\noindent or the propability that $Y = j$ given the observed predictor vector $x_0$. The Bayes Classifer establishes a Bayes decision boundary that falls on one side or the other of the classification. 
+
+Bayes error rate maximizes the probability of selecting, 
+
+$$
+1 - E(\max_j PR(Y = j | X))
+$$
+
+\noindent and is analogous to the irreducible error.
+
+\noindent \textbf{K-Nearest Neighbors}
+
+In theory, Bayes Classifier is the gold standard, but we don't always know the conditional distribution of $Y$ given $X$;thus, we need to stimate the probability -- K-Nearest Neighbor (KNN) is one method.
+
+Given a positive integer $K$, and a test observation $x_0$, the KNN classifer identigies the $K$ points in the training data that are closest to $x_0$, represented by $N_0$. Condition probabilities are estimated for class $j$ as a fraction of $N_0$ whose response values equal $j$:
+
+$$
+Pr(Y=j|X=x_0) = \frac{1}{K} \sum_{i \in N_0} I(y_i = J)
+$$
+
+The choice of $K$ has a drastic effect on the classifer obtained; small $K=1$ provides a boundary that is overfly flexible and has a low bias but high variance. As $K$ increases, method becomes less flexible and is closer to linear (high bias low variance). No strong relationship between test and train error rates. Flexible $K=1$ have a low training rate (0), but test error will be high.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/knn_K}
+\end{center}
+
+\noindent \textbf{Note:} In both the regression and classification settings, choosing the correct level of flexibility is critical to the success of any statistical learning method.
