@@ -18,5 +18,5 @@ system("pdflatex Notes-Intro-to-Stat-Learning.tex")
 system("rm Notes-Intro-to-Stat-Learning.tex")
 system("rm Notes-Intro-to-Stat-Learning.log")
 system("rm Notes-Intro-to-Stat-Learning.aux")
-system("rm Notes-Intro-to-Stat-Learning.toc")
+# system("rm Notes-Intro-to-Stat-Learning.toc")
 

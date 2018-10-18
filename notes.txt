@@ -183,7 +183,8 @@ Variance between training data sets shouldn't change $\hat{f}$ too much; however
 
 In terms of bias, the inverse is true. Restricted methods do not identify the true response variable, which results in large bias; however, flexible methods are usually better at predicting the true response variable which provides less bias.
 
-\noindent \textbf{Bias-Variance Trade-Off}
+\paragraph{Bias-Variance Trade-Off}
+
 \begin{itemize}
 \item Flexible Methods: Variance increases and bias will decrease MSE
 \item Restricted Methods: Variance decreases and bias will increases MSE
@@ -205,7 +206,7 @@ $$
 Ave(I(Y-0 \neq \hat{y}_0))
 $$
 
-\noindent \textbf{The Bayes Classifer}
+\paragraph{The Bayes Classifer}
 
 The error rate acn be classified by assigning each observation to themost likely class, given its predictor values.The Bayes Classifer is,
 
@@ -223,7 +224,7 @@ $$
 
 \noindent and is analogous to the irreducible error.
 
-\noindent \textbf{K-Nearest Neighbors}
+\paragraph{K-Nearest Neighbors}
 
 In theory, Bayes Classifier is the gold standard, but we don't always know the conditional distribution of $Y$ given $X$;thus, we need to stimate the probability -- K-Nearest Neighbor (KNN) is one method.
 
@@ -240,3 +241,386 @@ The choice of $K$ has a drastic effect on the classifer obtained; small $K=1$ pr
 \end{center}
 
 \noindent \textbf{Note:} In both the regression and classification settings, choosing the correct level of flexibility is critical to the success of any statistical learning method.
+
+\section{Linear Regression}
+
+\subsection{Simple Linear Regression}
+
+Approach to predicting a quantitative response $Y$ on the basis of a single predictor variable $X$, assuming an approximate linear relationship.
+
+$$
+Y \approx \beta_0 + \beta_1 X
+$$
+
+\noindent where $\beta_0, \beta_1$ are unknown constants that represent an intercept and slope, known as coefficients or parameters.
+
+\subsubsection{Estimating the Coefficients}
+
+Goal is to minimize the relationship between a linear line and the actual value, also known as residuals. Most approaches envolve minimizing the least squares criterion.
+
+Residual from linear regression is,
+
+$$
+e_i = y_i - \hat{y}_i
+$$
+
+\noindent where residual sum of squares (RSS) is,
+
+$$
+RSS = e_1^2 + e_2^2 + ... + e_n^2
+$$
+
+\noindent and the minimization problem reduces to,
+
+$$
+\beta_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^2 (x_i - \bar{x})^2}
+$$
+
+$$
+\beta_0 = \bar{y} - \hat{\beta} \bar{x}
+$$
+
+\subsubsection{Assessing the Accuracy of the Coefficient Estimates}
+
+A sample mean is unbiased in the sense that on average the estimated sample equals population mean. By selecting multiply samples, calculating mean, and estimate mean of sample means, the mean should be close to the population mean, which produces unbiased mean. The regression mean provides a reasonable estimate of this sampling procedure.
+
+To calculate how over-or-under the average estimate of the population mean is, we use the standard error,
+
+$$
+Var(\hat{\mu}) = SE(\hat{\mu})^2 = \frac{\sigma}{n}
+$$
+
+A regression line provides a reasonable estimate of the sample mean assuming the sample mean is randomly drawn multiple times and averaged.
+
+\noindent \textbf{Standard Error:} tells us the average amount that is estimate $\hat{\mu}$ differs from the actual value of $\mu$
+
+$$
+SE(\hat{\beta}_1)^2 = \frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}
+$$
+
+\noindent where $\sigma^2 = Var(\epsilon)$ and we assume the errors are  uncorrelted with common variance $\sigma^2$. Generally, we don't know $\sigma$, so we estimate from the residual standard error,
+
+$$
+RSE = \sqrt{RSS/(n-2)}
+$$
+
+Standard errors can then be used to calculate confidence intervals at a 95\% confidence interval as,
+
+$$
+[\hat{\beta_1} - 2 \cdot SE(\hat{\beta_1}), \hat{\beta_2} + 2 \cdot SE(\hat{\beta_1})]
+$$
+
+SE can also be used to perform hypothesis tests on coefficients (stat. sign),
+
+$$
+H_0: \beta_1 (\text{There is no relationship between X and Y.})
+$$
+
+$$
+H_a: \beta_1 \neq (\text{There is some relationship between X and  Y.})
+$$
+
+A t-stat measures the number of standard devisions that $\hat{\beta_1}$ is away from 0. Generally, a t-stat above 2 implied stat sign.
+
+$$
+t = \frac{\hat{\beta_1} - 0}{SE(\hat{\beta_1})}
+$$
+
+\noindent \textbf{p-value}: a small p-value indicates that it is is unlikely to observe such a substantial association between the predcitor and the response due to chance, in the absense of any real associations. 
+
+In other words, a small p-value infers that there is an association between the predictor and the response, in which case we reject the null hypothesis.
+
+\subsubsection{Assessing the Accuracy of the Model}
+
+Model accuracy is typically assessed with residual standard error (RSE) and the $R^2$
+
+\paragraph{Residual Standard Error}
+
+RSE is an estimate of the standard deviation of $\epsilon$, or the average amount that the response will deviate from the true regression line. RSE is thought of as a measure of lack of fit -- low RSE indicates model fits data well, high RSE indicates poor fit.
+
+$$
+RSE = \sqrt{\frac{1}{n-2}RSS}
+$$
+
+\paragraph{$R^2$ Statistic}
+
+$R^2$ takes the form of a proportion -- the portion of the variance explained -- and will be between 0 and 1
+
+$$
+R^2 = \frac{TSS - RSS}{TSS} = 1 - \frac{RSS}{TSS}
+$$
+
+\noindent where $TSS = \sum (y_i - \bar{y})^2$ is the total sum of squares. TSS measures the total variance in the response and is thought of as the amount of variability inherent in the response before the regression is performed. RSS measures the amount of variability that is left unexplained after performing the regression.
+
+$R^2 = 0$ regression did not explain much of the variability in the response
+
+$R^2 = 1$ indicates a large proportion of the variability in the response has been explained in the regression.
+
+TSS uses mean of $y_i$ whereas RSS uses residual differences.
+
+An R-squared of 0.65 might mean that the model explains about 65\% of the variation in our dependent variable.
+
+\noindent \textbf{Problems with R-squared} (https://data.library.virginia.edu/is-r-squared-useless/)
+
+\begin{itemize}
+\item R-squared does not measure goodness of fit. It can be arbitrarily low when the model is completely correct. By making  $\sigma^2$  large, we drive R-squared towards 0, even when every assumption of the simple linear regression model is correct in every particular.
+
+\item R-squared can be arbitrarily close to 1 when the model is totally wrong.
+
+\item R-squared says nothing about prediction error, even with  $\sigma^2$  exactly the same, and no change in the coefficients. R-squared can be anywhere between 0 and 1 just by changing the range of X. We’re better off using Mean Square Error (MSE) as a measure of prediction error.
+
+\item R-squared cannot be compared between a model with untransformed Y and one with transformed Y, or between different transformations of Y. R-squared can easily go down when the model assumptions are better fulfilled.
+\end{itemize}
+
+\subsection{Multiple Linear Regression}
+
+Estimating separate simple linear regression models for each preditor is not entirely satisfactory: (1) unclear how single predictions affect or variables (2) individual regressions igore the other regressors. A better solution is to provide individual slopes for each of the regressors,
+
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + ... + \beta_p X_p + \epsilon
+$$
+
+$\beta_j$ quantifies the association between that variable and the effect on a one unit increase in $X_j$, holding all other predictors fixed.
+
+\subsubsection{Estimating the Regression Coefficients}
+
+The parametric estimates are obtained using the same least squares minimization problem as before, althought slightly more complicated. The differences is that covariates are adjusted based on correlations and will obtain different results than individual least squares estimates\footnote{A regression of shark attacks and ice cream sales reveals a significant result that shark attacks increase with ice cream sale due to increases in temperatures; however, when temperatures are included in the analysis to adjust for correlations between increases in temperatues and ice cream sales, the estimate becomes insignificant. }.
+
+\paragraph{1. Is there a relationship between the response and predcitors?} 
+
+In multiple variable linear regressions we need to consider whether there is a relationship between all variables. Thus, the hull hypothesis is,
+
+$$
+H_0 = \beta_1 = \beta_2 = ... = \beta_p = 0
+$$
+
+An F-statistic establishes the hypothesis test,
+
+$$
+F = \frac{(TSS - RSS)/p}{RSS/(n - p - 1)}
+$$
+
+\noindent where a value close to 1 establishes no relationship between the response and predictors where as an F-stat greater than 1 establishes the covariates represent a relationship to the response variable $Y$.
+
+We can also test a subset of covariates to determine whether a relationsihp exists.
+
+\noindent \textbf{If we use the individual t-statistics and associated p-values in order to decide whether or not there is any association between the variables and the response, there is a very high chance that we will incorrectly conclude that there is a relationship. However, the F-statistic does not suffer from this problem because it adjusts for the number of predictors.}
+
+\paragraph{2. Deciding on Important Vairables}
+
+It is possible that all of the predictors are associated wth the response, but it is more often the case that the response is only related to a subset of the predictors. This association is referred to as variable selection.
+
+To determine the best variable selections, we can utilize BIC, AIC,  $R^2$, or even RMSE. However, the size of model selection grows expontially, so costs increase substancially.
+
+Three approaches exist to validate model selection:
+
+\begin{itemize}
+\item Forward selection: start with intercept with no predcitors and add variables that minimize the RSS.
+
+\item Backward selection: start with all variables and remove variables that are the least stat sign.
+
+\item Mixed selection: combination of forward and backward selection. Start with no variables, add variables that provides the best fit, but only add variables below a certain threshold.
+
+\end{itemize}
+
+\paragraph{3. Model Fit}
+
+Most common numerical measures of model fit are RSE and $R^2$. It is important to note that $R^2$ will always increase with additional variables, so care needs to be taken when utilize $R^2$ as a model fit discussion. Additional RSE can increase when variables are added. 
+
+\paragraph{4. Predictions}
+
+Once the model has been fit, predictions are relatively straightforward. However, uncertainly exists,
+
+\begin{itemize}
+\item Are the coefficient estimates of the true population? Inaccuracies related to the reducible error.
+\item Does the linear model provide accurate approximations? Model bias may bias results.
+\item Even if we know the true values, we cannot prefectly predict the response because of the random error. Therefore, irreducible errors always exist in linear approximations.
+\end{itemize}
+
+\noindent \textbf{Note:} Confidence intervals are used to quantify uncertainly around model estimates. 
+
+\subsection{Other Considerations in the Regression Model}
+
+\subsubsection{Qualitative Predictors}
+
+Predictors can be qualitative.
+
+\paragraph{Predictors with two levels}
+
+Create a dummy variable, $D$, for two possible numerical values, such as 0 or 1. The level that is associated with 1 can be interpreted as,
+
+$$
+D(1) = \beta_0 + \beta_1 + \epsilon
+$$
+
+$$
+D(0) = \beta_0 + \epsilon
+$$
+
+It is also possible to code with 1 and -1. In this case, the interpretation of the coefficients change.
+
+$$
+D(1) = \beta_0 + \beta_1 + \epsilon
+$$
+
+$$
+D(-1) = \beta_0 - \beta_1 + \epsilon
+$$
+
+\paragraph{Predictors with more than two levels}
+
+With more than two levels, dummy variables need to be spread out for each factor (level). When including more than two factors, there will always be one fewer dummy variables. The level with no dummy variable is known as the baseline and includes the constant and errors.
+
+\noindent \textbf{Note:} The baseline establishes the number for which coefficients are differenced or added. For example, a baseline (intercept) reports 500. $\beta_1$ reports a coefficient of -5. Therefore, the dummy variable representing $\beta_1$ has a value of 495.
+
+\subsubsection{Extensions of the Linear Model}
+
+Two of the most important assumptions in linear regressions is,
+
+\begin{itemize}
+\item \textbf{Additive}: the effect of changes in predictor $X$ on the response $Y$ is independent of the values of other predictors.
+\item \textbf{Linear}: change in response $Y$ due to a one-unit change in $X$ is constant, regardless of the value of $X$
+\end{itemize}
+
+\paragraph{Removing the Additive Assumption}
+
+Additive assumption assumes no correlation between preditors, which may not always hold (temp and precipitation). In statistics, this is known as an interaction effect. We can relax the additive assumption by including an \textbf{interaction term}.
+
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2 + \epsilon
+$$
+
+Example,
+
+\begin{center}
+\includegraphics[width = 5in]{figures/interaction_ex}
+\end{center}
+
+\noindent textbf{Note:} The \textbf{hierarchiacal principle} states that if we include an interaction in a model, we should also include the main effects, even if the p-values associate with their coeffcients are not sign.
+
+Quantitative and qualitative variables can be interacted to remove the additive assumption.
+
+\paragraph{Non-linear relationship}
+
+The relationship between the response and predictor may be non-linear. We can accomodate this relationship by using a polynomial regression.
+
+A simple way to fit a polynomial is to use quadratic functional form of variables.
+
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_1^2 + \epsilon
+$$
+
+Note that this is still a linear model!!!
+
+\subsubsection{Potential Problems}
+
+Most common problems when fitting a linear regression,
+
+\begin{itemize}
+\item Non-linearity of the response-predictor relationships.
+\item Correlation of error terms.
+\item Non-constant variance of error terms.
+\item Outliers.
+\item High-leverage points.
+\item Collinearity.
+\end{itemize}
+
+\paragraph{1. Non-linearity of the Data}
+
+If a true linear relationship exists between response and predictors, then we can utilize the linear interpretation discussed. However, nonlinearities can throw off modeling aspects and interpretations.
+
+Residual plots are useful for identify non-linearities.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/nl_residual}
+\end{center}
+
+Simple approaches to transform variables include log $X$, $sqrt{X}$, and $X^2$.
+
+\paragraph{2. Correlation of Error Terms}
+
+An important assumption is that the error terms are uncorrelated. Moreover, standard errors are calculated assuming uncorrelated error terms, thus may underestimate the true standard errors.
+
+Correlation of errors terms may exists in time series data (serial correlation). One way to check for correlation in error terms is to plot residuals versus time series. 
+
+\begin{center}
+\includegraphics[width = 5in]{figures/cor_err_ts}
+\end{center}
+
+Correlation of error terms can exist outside of time series if groups (states or family members) are included in the variables.
+
+\paragraph{Non-constant Variance of Error Terms}
+
+Another important assumption is that the error terms have a constant variance, $Var(\epsilon) = \sigma^2$. None constant error terms exist with heteroscedastic data.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/var_err}
+\end{center}
+
+Ways to deal with heteroskedasticity is to log the response variable. Another option is to fit a weighted least squares.
+
+\paragraph{Outliers}
+
+Outlier is a point far beyond the value predicted by the model. An outlier may or may not affect a predictors slope and may also affect the RSE, which can affect confidence intervals and p-values, and can also affect the $R^2$.
+
+Residual plots can be used to identify outliers or standardized residual (divide residuals by standard error.) plots,
+
+\begin{center}
+\includegraphics[width = 5in]{figures/outliers}
+\end{center}
+
+\paragraph{5. High Leverage Points}
+
+High leverage points have an unusual value for $x_i$. These observations can heavily affect the least squares line.
+
+These can be identified similar to outliers or through a leverage statistic, calculated as,
+
+$$
+h_i = \frac{1}{n} + \frac{(x_i - \bar{x})^2}{\sum_{i'=1}^n(x_{i'} - \bar{x})^2}
+$$
+
+\begin{center}
+\includegraphics[width = 5in]{figures/high_leverage_points}
+\end{center}
+
+\paragraph{6. Collinearity}
+
+Collinearity occurs when two or more predictor variables are closely related to one another. High correlation relates to variables being collinear. 
+
+Collinearity introduces problems because the effects cannot be parsed out which can produce uncertainty around the coefficient estimates. Other problems exist, such as reduction in accuracy of coefficients causes standard errors to grow (due to calculation of t-stat and coefficient).
+
+Ways to deal to collinearity include looking at correlation matrix of the predictors. A better way to assess multicollinearity (correlation of more than two variables) is to use variance infaltion factor (VIF). The smallest possible value for VIF is 1, which indicates complete absense of collinearity. A VIF exceeds 5 or 10 indicates a problem.
+
+VIF is the ratio of the variance of $\hat{\beta_j}$ when fitting the full model divided by the variance of $\hat{\beta_j}$ on its own.
+
+$$
+VIF(\hat{\beta_j}) = \frac{1}{1 - R_{X_j | X_{-j}}^2}
+$$
+
+To deal with collinearity, two solutions exist: (1) drop the problematic variables; (2) combine the collinear vairables into a single predictor.
+
+\subsection{Comparison of Linear Regression with K-Nearest Neighbors}
+
+K-nearest neighbors regression (KNN regression) is one of the most well-known non-parametric regressions. KNN regressions first identify the K training observations that are closest to $x_0$. Then estimates $f(x_0)$ using the average of all the training responses in $N_0$,
+
+$$
+\hat{f}(x_0) = \frac{1}{K} \sum_{x_i \in N_0} y_i
+$$
+
+Small $K$ results in step-function that is most flexible of data while larger values smooth the plane and less flexible. The optimal value of $K$ depends on the bias-variance tradeoff.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/knn_reg}
+\end{center}
+
+\noindent \textbf{Note:} the parametric approach will outperform the non-parametric approach if the parametric form that has been selected is close to the true form of $f$.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/knn_vs_lin}
+\end{center}
+
+\noindent \textbf{Note:} Generally, KNN regressions will outperform linear regressions with low number of variables. As the number of variables increase, KNN predictive power degrades (problem of dimensionality). As a general rule, parametric methods will tend to outperform non-parametric approaches when there is a small number of observations per predictor.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/knn_vs_lin_2}
+\end{center}
