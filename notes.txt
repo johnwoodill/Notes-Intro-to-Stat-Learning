@@ -41,7 +41,7 @@ $$
 E(Y - \hat{Y})^2 = \underbrace{[f(X) - \hat{f}(X)]^2}_{\text{Reducible}} + \underbrace{Var(\epsilon)}_{\text{Irreducible}}
 $$
 
-Thus, the irreducible error depends on the variation in the error. Statistical Learning focuses on improving (minimizing) the reducible error. Note that the irreducible error will always provide an upper bound on the accurary of the prediction, which is almost always unknown in practice
+Thus, the irreducible error depends on the variation in the error. Statistical Learning focuses on improving (minimizing) the reducible error. Note that the irreducible error will always provide an upper bound on the accuracy of the prediction, which is almost always unknown in practice
 
 \subsubsection{Inference}
 
@@ -72,7 +72,7 @@ Advantage: simplifies estimating $f()$ because it is easier to estimate a set of
 
 Disadvantage: model does not usually match $f()$.
 
-\noindent \textbf{Non-Parametric}: Methods do not make explicit assupmtions about the functional form of $f()$. Goal is to get as close to the data points as possible without being to rough or widdly.
+\noindent \textbf{Non-Parametric}: Methods do not make explicit assumptions about the functional form of $f()$. Goal is to get as close to the data points as possible without being to rough or widdly.
 
 Examples:
 \begin{itemize}
@@ -81,7 +81,7 @@ Examples:
 	\item Support Vector Machines
 \end{itemize}
 
-Advantange: potential to accurately fit a wider range of possible shapes for $f()$.
+Advantage: potential to accurately fit a wider range of possible shapes for $f()$.
 
 Disadvantage: do not reduce the problem of estimating $f$ to a small number of parameters, thus a large number of observations is required to accurately estimate $f$.
 
@@ -96,7 +96,7 @@ Restrictive models, such as linear models, are more interpretable. In contrast, 
 \includegraphics[width = 5in]{figures/tradeoff}
 \end{center}
 
-The choice of modeling strategy comes down to the end goal: prediction or inference. Less flexible models are easy to interpret, thus prefered when the goal is inference. If prediction is prefered, then more flexible models may be prefered -- although, more flexible models are not always prefered for prediction acurracy due to overfitting.
+The choice of modeling strategy comes down to the end goal: prediction or inference. Less flexible models are easy to interpret, thus prefered when the goal is inference. If prediction is prefered, then more flexible models may be prefered -- although, more flexible models are not always prefered for prediction accuracy due to overfitting.
 
 \subsubsection{Supervised Versus Unsupervised Learning}
 
@@ -125,14 +125,14 @@ Variables are characterized by quantitative or qualitative (categorical). Quanti
 
 \begin{itemize}
 \item Regression Analysis: Uses quantitative variables
-\item Classification Analysis: Uses qualitatie variables
+\item Classification Analysis: Uses qualitative variables
 \end{itemize}
 
 We select statistical learning methods based on the response variable being quantitative or qualitative. 
 
 \noindent \textbf{Note}: distribution of predictors being qualitative or quantitative is less important. 
 
-\subsection{Assessing Model Accurary}
+\subsection{Assessing Model Accuracy}
 
 \subsubsection{Measuring Quality of Fit}
 
@@ -142,7 +142,7 @@ $$
 MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{f}(x_i))^2
 $$
 
-Calculating training MSE (MSE on training data) doesn't tell us much about out-of-sample performace, which is prefered. Suppose $(x_0, y_0)$ are previously unseen test observations. The test MSE is
+Calculating training MSE (MSE on training data) doesn't tell us much about out-of-sample performance, which is prefered. Suppose $(x_0, y_0)$ are previously unseen test observations. The test MSE is
 
 $$
 Ave (y_0 - \hat{f}(x_0))^2)
@@ -206,15 +206,15 @@ $$
 Ave(I(Y-0 \neq \hat{y}_0))
 $$
 
-\paragraph{The Bayes Classifer}
+\paragraph{The Bayes Classifier}
 
-The error rate acn be classified by assigning each observation to themost likely class, given its predictor values.The Bayes Classifer is,
+The error rate can be classified by assigning each observation to the most likely class, given its predictor values.The Bayes Classifier is,
 
 $$
 Pr(Y = j | X = x_0)
 $$
 
-\noindent or the propability that $Y = j$ given the observed predictor vector $x_0$. The Bayes Classifer establishes a Bayes decision boundary that falls on one side or the other of the classification. 
+\noindent or the probability that $Y = j$ given the observed predictor vector $x_0$. The Bayes Classifier establishes a Bayes decision boundary that falls on one side or the other of the classification. 
 
 Bayes error rate maximizes the probability of selecting, 
 
@@ -226,15 +226,15 @@ $$
 
 \paragraph{K-Nearest Neighbors}
 
-In theory, Bayes Classifier is the gold standard, but we don't always know the conditional distribution of $Y$ given $X$;thus, we need to stimate the probability -- K-Nearest Neighbor (KNN) is one method.
+In theory, Bayes Classifier is the gold standard, but we don't always know the conditional distribution of $Y$ given $X$;thus, we need to estimate the probability -- K-Nearest Neighbor (KNN) is one method.
 
-Given a positive integer $K$, and a test observation $x_0$, the KNN classifer identigies the $K$ points in the training data that are closest to $x_0$, represented by $N_0$. Condition probabilities are estimated for class $j$ as a fraction of $N_0$ whose response values equal $j$:
+Given a positive integer $K$, and a test observation $x_0$, the KNN classifier identifies the $K$ points in the training data that are closest to $x_0$, represented by $N_0$. Condition probabilities are estimated for class $j$ as a fraction of $N_0$ whose response values equal $j$:
 
 $$
 Pr(Y=j|X=x_0) = \frac{1}{K} \sum_{i \in N_0} I(y_i = J)
 $$
 
-The choice of $K$ has a drastic effect on the classifer obtained; small $K=1$ provides a boundary that is overfly flexible and has a low bias but high variance. As $K$ increases, method becomes less flexible and is closer to linear (high bias low variance). No strong relationship between test and train error rates. Flexible $K=1$ have a low training rate (0), but test error will be high.
+The choice of $K$ has a drastic effect on the classifier obtained; small $K=1$ provides a boundary that is overfly flexible and has a low bias but high variance. As $K$ increases, method becomes less flexible and is closer to linear (high bias low variance). No strong relationship between test and train error rates. Flexible $K=1$ have a low training rate (0), but test error will be high.
 
 \begin{center}
 \includegraphics[width = 5in]{figures/knn_K}
@@ -256,7 +256,7 @@ $$
 
 \subsubsection{Estimating the Coefficients}
 
-Goal is to minimize the relationship between a linear line and the actual value, also known as residuals. Most approaches envolve minimizing the least squares criterion.
+Goal is to minimize the relationship between a linear line and the actual value, also known as residuals. Most approaches involve minimizing the least squares criterion.
 
 Residual from linear regression is,
 
@@ -298,7 +298,7 @@ $$
 SE(\hat{\beta}_1)^2 = \frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}
 $$
 
-\noindent where $\sigma^2 = Var(\epsilon)$ and we assume the errors are  uncorrelted with common variance $\sigma^2$. Generally, we don't know $\sigma$, so we estimate from the residual standard error,
+\noindent where $\sigma^2 = Var(\epsilon)$ and we assume the errors are  uncorrelated with common variance $\sigma^2$. Generally, we don't know $\sigma$, so we estimate from the residual standard error,
 
 $$
 RSE = \sqrt{RSS/(n-2)}
@@ -320,13 +320,13 @@ $$
 H_a: \beta_1 \neq (\text{There is some relationship between X and  Y.})
 $$
 
-A t-stat measures the number of standard devisions that $\hat{\beta_1}$ is away from 0. Generally, a t-stat above 2 implied stat sign.
+A t-stat measures the number of standard deviations that $\hat{\beta_1}$ is away from 0. Generally, a t-stat above 2 implied statistical significance.
 
 $$
 t = \frac{\hat{\beta_1} - 0}{SE(\hat{\beta_1})}
 $$
 
-\noindent \textbf{p-value}: a small p-value indicates that it is is unlikely to observe such a substantial association between the predcitor and the response due to chance, in the absense of any real associations. 
+\noindent \textbf{p-value}: a small p-value indicates that it is is unlikely to observe such a substantial association between the predictor and the response due to chance, in the absence of any real associations. 
 
 In other words, a small p-value infers that there is an association between the predictor and the response, in which case we reject the null hypothesis.
 
@@ -374,7 +374,7 @@ An R-squared of 0.65 might mean that the model explains about 65\% of the variat
 
 \subsection{Multiple Linear Regression}
 
-Estimating separate simple linear regression models for each preditor is not entirely satisfactory: (1) unclear how single predictions affect or variables (2) individual regressions igore the other regressors. A better solution is to provide individual slopes for each of the regressors,
+Estimating separate simple linear regression models for each predictor is not entirely satisfactory: (1) unclear how single predictions affect or variables (2) individual regressions ignore the other regressors. A better solution is to provide individual slopes for each of the regressors,
 
 $$
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + ... + \beta_p X_p + \epsilon
@@ -384,11 +384,11 @@ $\beta_j$ quantifies the association between that variable and the effect on a o
 
 \subsubsection{Estimating the Regression Coefficients}
 
-The parametric estimates are obtained using the same least squares minimization problem as before, althought slightly more complicated. The differences is that covariates are adjusted based on correlations and will obtain different results than individual least squares estimates\footnote{A regression of shark attacks and ice cream sales reveals a significant result that shark attacks increase with ice cream sale due to increases in temperatures; however, when temperatures are included in the analysis to adjust for correlations between increases in temperatues and ice cream sales, the estimate becomes insignificant. }.
+The parametric estimates are obtained using the same least squares minimization problem as before, although slightly more complicated. The differences is that covariates are adjusted based on correlations and will obtain different results than individual least squares estimates\footnote{A regression of shark attacks and ice cream sales reveals a significant result that shark attacks increase with ice cream sale due to increases in temperatures; however, when temperatures are included in the analysis to adjust for correlations between increases in temperature and ice cream sales, the estimate becomes insignificant. }.
 
-\paragraph{1. Is there a relationship between the response and predcitors?} 
+\paragraph{1. Is there a relationship between the response and predictors?} 
 
-In multiple variable linear regressions we need to consider whether there is a relationship between all variables. Thus, the hull hypothesis is,
+In multiple variable linear regressions we need to consider whether there is a relationship between all variables. Thus, the null hypothesis is,
 
 $$
 H_0 = \beta_1 = \beta_2 = ... = \beta_p = 0
@@ -402,20 +402,20 @@ $$
 
 \noindent where a value close to 1 establishes no relationship between the response and predictors where as an F-stat greater than 1 establishes the covariates represent a relationship to the response variable $Y$.
 
-We can also test a subset of covariates to determine whether a relationsihp exists.
+We can also test a subset of covariates to determine whether a relationship exists.
 
 \noindent \textbf{If we use the individual t-statistics and associated p-values in order to decide whether or not there is any association between the variables and the response, there is a very high chance that we will incorrectly conclude that there is a relationship. However, the F-statistic does not suffer from this problem because it adjusts for the number of predictors.}
 
-\paragraph{2. Deciding on Important Vairables}
+\paragraph{2. Deciding on Important Variables}
 
-It is possible that all of the predictors are associated wth the response, but it is more often the case that the response is only related to a subset of the predictors. This association is referred to as variable selection.
+It is possible that all of the predictors are associated with the response, but it is more often the case that the response is only related to a subset of the predictors. This association is referred to as variable selection.
 
-To determine the best variable selections, we can utilize BIC, AIC,  $R^2$, or even RMSE. However, the size of model selection grows expontially, so costs increase substancially.
+To determine the best variable selections, we can utilize BIC, AIC,  $R^2$, or even RMSE. However, the size of model selection grows exponentially, so costs increase substantially.
 
 Three approaches exist to validate model selection:
 
 \begin{itemize}
-\item Forward selection: start with intercept with no predcitors and add variables that minimize the RSS.
+\item Forward selection: start with intercept with no predictors and add variables that minimize the RSS.
 
 \item Backward selection: start with all variables and remove variables that are the least stat sign.
 
@@ -429,15 +429,15 @@ Most common numerical measures of model fit are RSE and $R^2$. It is important t
 
 \paragraph{4. Predictions}
 
-Once the model has been fit, predictions are relatively straightforward. However, uncertainly exists,
+Once the model has been fit, predictions are relatively straightforward. However, uncertainty exists,
 
 \begin{itemize}
 \item Are the coefficient estimates of the true population? Inaccuracies related to the reducible error.
 \item Does the linear model provide accurate approximations? Model bias may bias results.
-\item Even if we know the true values, we cannot prefectly predict the response because of the random error. Therefore, irreducible errors always exist in linear approximations.
+\item Even if we know the true values, we cannot perfectly predict the response because of the random error. Therefore, irreducible errors always exist in linear approximations.
 \end{itemize}
 
-\noindent \textbf{Note:} Confidence intervals are used to quantify uncertainly around model estimates. 
+\noindent \textbf{Note:} Confidence intervals are used to quantify uncertainty around model estimates. 
 
 \subsection{Other Considerations in the Regression Model}
 
@@ -484,7 +484,7 @@ Two of the most important assumptions in linear regressions is,
 
 \paragraph{Removing the Additive Assumption}
 
-Additive assumption assumes no correlation between preditors, which may not always hold (temp and precipitation). In statistics, this is known as an interaction effect. We can relax the additive assumption by including an \textbf{interaction term}.
+Additive assumption assumes no relationship between predictors, which may not always hold (temp and precipitation). In statistics, this is known as an interaction effect. We can relax the additive assumption by including an \textbf{interaction term}.
 
 $$
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2 + \epsilon
@@ -496,13 +496,13 @@ Example,
 \includegraphics[width = 5in]{figures/interaction_ex}
 \end{center}
 
-\noindent textbf{Note:} The \textbf{hierarchiacal principle} states that if we include an interaction in a model, we should also include the main effects, even if the p-values associate with their coeffcients are not sign.
+\noindent textbf{Note:} The \textbf{hierarchical principle} states that if we include an interaction in a model, we should also include the main effects, even if the p-values associate with their coefficients are not sign.
 
 Quantitative and qualitative variables can be interacted to remove the additive assumption.
 
 \paragraph{Non-linear relationship}
 
-The relationship between the response and predictor may be non-linear. We can accomodate this relationship by using a polynomial regression.
+The relationship between the response and predictor may be non-linear. We can accommodate this relationship by using a polynomial regression.
 
 A simple way to fit a polynomial is to use quadratic functional form of variables.
 
@@ -551,7 +551,7 @@ Correlation of error terms can exist outside of time series if groups (states or
 
 \paragraph{Non-constant Variance of Error Terms}
 
-Another important assumption is that the error terms have a constant variance, $Var(\epsilon) = \sigma^2$. None constant error terms exist with heteroscedastic data.
+Another important assumption is that the error terms have a constant variance, $Var(\epsilon) = \sigma^2$. Non-constant error terms exist with heteroscedastic data.
 
 \begin{center}
 \includegraphics[width = 5in]{figures/var_err}
@@ -589,7 +589,7 @@ Collinearity occurs when two or more predictor variables are closely related to 
 
 Collinearity introduces problems because the effects cannot be parsed out which can produce uncertainty around the coefficient estimates. Other problems exist, such as reduction in accuracy of coefficients causes standard errors to grow (due to calculation of t-stat and coefficient).
 
-Ways to deal to collinearity include looking at correlation matrix of the predictors. A better way to assess multicollinearity (correlation of more than two variables) is to use variance infaltion factor (VIF). The smallest possible value for VIF is 1, which indicates complete absense of collinearity. A VIF exceeds 5 or 10 indicates a problem.
+Ways to deal to collinearity include looking at correlation matrix of the predictors. A better way to assess multicollinearity (correlation of more than two variables) is to use variance inflation factor (VIF). The smallest possible value for VIF is 1, which indicates complete absence of collinearity. A VIF exceeds 5 or 10 indicates a problem.
 
 VIF is the ratio of the variance of $\hat{\beta_j}$ when fitting the full model divided by the variance of $\hat{\beta_j}$ on its own.
 
@@ -597,7 +597,7 @@ $$
 VIF(\hat{\beta_j}) = \frac{1}{1 - R_{X_j | X_{-j}}^2}
 $$
 
-To deal with collinearity, two solutions exist: (1) drop the problematic variables; (2) combine the collinear vairables into a single predictor.
+To deal with collinearity, two solutions exist: (1) drop the problematic variables; (2) combine the collinear variables into a single predictor.
 
 \subsection{Comparison of Linear Regression with K-Nearest Neighbors}
 
@@ -624,3 +624,71 @@ Small $K$ results in step-function that is most flexible of data while larger va
 \begin{center}
 \includegraphics[width = 5in]{figures/knn_vs_lin_2}
 \end{center}
+
+
+\subsection{Classification}
+
+Classification problems invole dealing with categorical (qualitative) variables. These problems, generally, predict the probability of each category, so they behave like a regression problem.
+
+Three most common classification problems: \textbf{logistic regression, linear discriminant analysis, and KNN}.
+
+\noindent \textbf{Why Not Linear Regression?}: No natural way to convert a qualitative response variable with more than two levels into a quantitative response that is rady for linear regression, e.g. can't convert 1, 2, 3 to 1 to 3.
+
+\subsubsection{Logistic Regression}
+
+Logistic regression models the probability that $Y$ belongs to a particular category, $p(X) = Pr(Y = 1 | X)$. The general form is from a linear regression is,
+
+$$
+p(X) = \beta_0 + \beta_1 X
+$$
+
+However, the linear regression form includes a balance between negative values and positive values, which does not apply to probabilities.
+
+The logistic function form is,
+
+$$
+p(X) = \frac{e^{\beta_0 + \beta_1 X_1}}{1 + e^{\beta_0 + \beta_1 X_1}}
+$$
+
+To fit the model between zero and one, we use a maximum likelihood method (see next section). Solving for right-hand side, $\beta_0 + \beta_1 X$ equals,
+
+$$
+\underbrace{log(\frac{p(X)}{1 - p(X)})}_{\text{Log-odds or logit}} = \beta_0 + \beta_1 X
+$$
+
+Thus, the logistic regression model has a logit that is linear in $X$. However, in a logistic regression, a one-unit increase in $X$ changes the log odds by $\beta_1$.
+
+\subsubsection{Estimating the Regression Coefficients}
+
+General intuition behind maximum likelihood is to estimate $\beta_0$ and $\beta_1$ such that the predicted probability $\tilde{p}(x_i)$ of default for each individual from the logistic regression, corresponds as closely as possible to the individuals observed default status. In other words, we find coefficients that yields a number close to one for all individuals who defaulted and number close to zero for all individuals who did not. Formally, the likelihood function is,
+
+$$
+l(\beta_0, \beta_1) = \prod_{i:y_i = 1} p(x_i) \prod_{i':y_{i'} = 0} (1 - p(x_{i'}))
+$$
+
+$\beta_0, \beta_1$ are chosen to maximize the likelihood function.
+
+Many aspects of logistic regression are similar to linear regression: measure accuracy of coefficients with standard errors, t-stats, null hypothesis testing. The intercept is generally not of interest and is used to fit probabilities to the proportion of ones in the data.
+
+\subsubsection{Making Prediction}
+
+Predictions are made from the simple logistic model, 
+
+$$
+\hat{p}(X) = \frac{e^{\hat{\beta}_0 + \hat{\beta}_1 X}}{1 + e^{\hat{\beta}_0 + \hat{\beta}_1 X}}
+$$
+
+\subsubsection{Multiple Logistic Regression}
+
+Using multiple variables follows a similar approach to simple logistic regression,
+
+$$
+p(X) = \frac{e^{\beta_0 + \beta_1 X_1 + ... + \beta_p X_p}}{1 + e^{\beta_0 + \beta_1 X_1 + ... + \beta_p X_p}}
+$$
+
+As in the linear regression setting, the results obtained using one predictor may be quite different from those obtained using multiple predictors, especially when there is correlation among the predictors. In general, the phenomenon is known as confounding.
+
+\subsubsection{Logistic Regression for > 2 Response Classes}
+
+Multiple-class logistic regressions are available, but discriminant analysis is popular for multiple-class classification.
+
