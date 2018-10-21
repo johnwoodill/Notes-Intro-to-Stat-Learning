@@ -688,7 +688,106 @@ $$
 
 As in the linear regression setting, the results obtained using one predictor may be quite different from those obtained using multiple predictors, especially when there is correlation among the predictors. In general, the phenomenon is known as confounding.
 
-\subsubsection{Logistic Regression for > 2 Response Classes}
+\paragraph{\textbf{Logistic Regression for > 2 Response Classes}}
 
 Multiple-class logistic regressions are available, but discriminant analysis is popular for multiple-class classification.
 
+\subsubsection{Linear Discriminant Analysis}
+
+Linear Discriminant Analysis involves modeling the distribution of the predictors $X$ separately in each of the response classes, and then use Bayes theorem to flip those around into estimate for $Pr(Y = k|X=x)$.
+
+Why chooce LDA?
+
+\begin{itemize}
+\item When classes are well separated in logistic regressions, the results are unstable. LDA does not suffer from this.
+\item If $X$ predictors are approx normal and $n$ is small, LDA are more stable
+\item Popular with two repsonse class
+\end{itemize}
+
+\subsubsection{Using Bayes' Theorem for Classification}
+
+The Bayes' Theorem states,
+
+$$
+Pr(Y = k| X = x) = \frac{\pi_k f_k(x)}{\sum_{l=1}^K \pi_l f_l(x)}
+$$
+
+\noindent where $\pi_k$ represents the overall, or prior, probability that a given obseration is associated with the kth category of the response variable $Y$. $f_k(x)$ denotes the density function of $X$ for an observation that comes from the kth class.
+
+Generally, estimating $\pi_k$ is easy if we hae a random sample of $Y$s from the population (compute fraction of the training observationsthat belong to the kth class). However, estimating $f_k(x)$ is more challending unless a form of density is assumed. The Bayes' classifier provides the lowest error rate, so if we can estimate $f_k(x)$ then we can get a way to classify Bayes.
+
+ \subsubsection{Linear Discriminant Analysis for p=1}
+
+ With only one predictor, assuming a normal or Gaussian, it is simlpy to estimate the normal density. 
+
+\begin{center}
+\includegraphics[width = 5in]{figures/LDA_normal}
+\end{center}
+
+In practice, even if we are quite certain of our assumption that X is drawn from a Gaussian distribution within each class, we still have to estimate the parameters $\mu_1,...,\mu_K, \pi_1,...,\pi_K, and \sigma^2$. The linear discriminant analysis (LDA) method approximates the Bayes classifier by plugging estimates for $\pi_k, \mu_k, and \sigma^2$ as follows,
+
+$$
+\hat{\mu}_k = \frac{1}{n_k} \sum_{i:y_i = k} x_i
+$$ 
+
+$$
+\hat{\sigma}^2 = \frac{1}{n - K} \sum_{k=1}^K \sum_{i:y_i=k} (x_i - \hat{\mu}_k)^2
+$$
+
+\noindent where $n$ is total number of training observations, $n_k$ is the number of training obs in the kth class. The estimate for $\mu_k$ is simply the average of all the training observations from the kth class, while $\sigmaˆ2$ can be seen as a weighted average of the sample variances for each of the $K$ classes. We can estimate $\hat{\pi}_k$ as,
+
+$$
+\hat{\pi}_k = n_k / n
+$$
+
+The LDA clasifier is,
+
+$$
+\hat{\delta}_k (x) = x \cdot \frac{\hat{\mu}_k}{\hat{\sigma}^2} - \frac{\hat{\mu}_k^2}{2 \hat{\sigma}^2} + log(\hat{\pi}_k)
+$$
+
+\noindent \textbf{Note:} the word linear in LDA comes from the fact the the discriminant function $\hat{\delta}_k (x)$ are linear functions of $x$.
+
+To reiterate, the LDA classifier results from assuming that the observations within each class come from a normal distribution with a class-specific mean vector and a common variance $\sigma^2$, and plugging estimates for these parameters into the Bayes classifier.
+
+\subsubsection{Linear Discriminant Analysis for p > 1}
+
+In the case of $p > 1$ predictors, the LDA classifier assumes that the observations in the kth class are drawn from a multivariate Gaussian distribution $N(\mu_k, \sum)$, where $\mu_k$ is a class-specific mean vector, and $\sum$ is a covariance matrix that is common to all $K$ classes. The multivariation density function is plugged into LDA.
+
+\noindent \textbf{Problem:} binary classifiers, such as LDA, can make two types of errors: (1) can incorrectly assign an individual who defaults to the no default category, or (2) it can incorrectly assign an individual who does not default to the default category. The solution to this is a confusion matrix,
+
+\begin{center}
+\includegraphics[width = 5in]{figures/confusion_matrix}
+\end{center}
+
+\noindent which describes the number predicted correctly versus not to compare strength of the model. 
+
+While the Bayes' Classifier will provide lowest error rate, it doesn't always do a good job predicting because of the threshold for the posterior probability, default 50\%. If concerned about incorrect predictions, it's best to lower the threshold, but lowering too much will cause increases in prediction error. Deciding on the threshold is dependent on domain knowledge.
+
+The ROC cuvrve (receiver operating characteristics) is used to simultaneously display the two types of errors for all thresholds. The performance is based on the area under the curve (AUC) of the ROC. ROC curves are useful for comparing different classifiers.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/roc_curve}
+\end{center}
+
+\subsubsection{Quadratic Discriminant Analysis (QDA)}
+
+Like LDA, the QDA classifier results from assuming that the observations from each class are drawn from a Gaussian distribution, and plugging estimates for the parameters into Bayes’ theorem in order to per- form prediction. However, unlike LDA, QDA assumes that each class has its own covariance matrix. Further, QDA assumes $x$ is quandratic as opposed to linear.
+
+Generally, LDA is more flexible with a lower variance, so model performance is improved over QDA. However, with larger training sets, QDA may perform better, so the variance is not of concern.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/lda_vs_qda}
+\end{center}
+
+\subsection{Comparison of Classification Methods}
+
+LDA and logistic regressions are closely connected and differ only in their fitting procedure: logistic regression is estimating using maximum likelihood whereas LDA is estimated using mean and variance from a normal distribution.
+
+LDA assumes normal distributions and common variances, so is an improvement over logistic; however, without those assumptions, logistic regressions will do better.
+
+When the decision barrier is highly non-linear, KNN will perform better because of its non-parametric approach; however, KNN doesn't provide a table of cofficients to compare significance of variables.
+
+QDA serves as a compromise between KNN, LDA, and logistic regressions.
+
+In summary, when the true decision boundaries are linear, then the LDA and logistic regression approaches will tend to perform well. When the boundaries are moderately non-linear, QDA may give better results. Finally, for much more complicated decision boundaries, a non-parametric approach such as KNN can be superior.  
