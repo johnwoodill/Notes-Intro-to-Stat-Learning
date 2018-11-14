@@ -791,3 +791,77 @@ When the decision barrier is highly non-linear, KNN will perform better because 
 QDA serves as a compromise between KNN, LDA, and logistic regressions.
 
 In summary, when the true decision boundaries are linear, then the LDA and logistic regression approaches will tend to perform well. When the boundaries are moderately non-linear, QDA may give better results. Finally, for much more complicated decision boundaries, a non-parametric approach such as KNN can be superior.  
+
+\section{Resampling Methods}
+
+Resampling methods involve drawing samples from training set and refitting a model to obtain additional information. 
+
+\textbf{Model assessment:} The process of evaluating a models performance.
+
+\textbf{Model selection:} selecting the proper level of flexibility.
+
+\subsection{Cross-Validation}
+
+Given a data set, the use of a particular statistical learning method is warranted if it results in a low test error. The test error can be easily calculated if a designated test set is available. In contrast, the training error can be easily calculated by applying the statistical learning method to the observations used in its training. 
+
+\subsubsection{The Validation Set Approach}
+
+\textbf{Validation set approach:} involves randomly dividing the available set of oservations into two part, training set and validation set or hold-out set. The MSE from test is used to validate the performance of the model.
+
+Two drawbacks:
+
+\begin{itemize}
+\item validation estimate of the test error rate can be highly variable depending on which observations are in the training set and validation set.
+\item Reduced observation by splitting data suggests the validation set error rate may overestimate the test error rate for the model fit on the entire data set.
+\end{itemize}
+
+Cross-validation can address these two issues.
+
+\subsubsection{Leave-One-Out Cross-Validation}
+
+Leave-One-Out Cross-Validation (LOOCV) addresses the drawbacks by leaving out one observation as the validation set and the remaining are used to train the model. The procedure is repeated $n$ times and average of the test error is calculated as,
+
+$$
+CV_{(n)} = \frac{1}{n} \sum_{i=1}^n MSE_i
+$$
+
+Advantages:
+\begin{itemize}
+\item Less bias than the validation set appraoch
+\item no randomness is selection so LOOCV always yield the same reults.
+\end{itemize}
+
+Disadvantage: can be expensive to implement.
+
+\subsubsection{k-Fold Cross-Validation}
+
+K-fold CV randomly divides the set of observations into $k$ groups, or folds, of equal size. Each fold is treated as a validation set and the observations not in the fold is the training set. The procedure is repeated $k$ times and average MSE is computed,
+
+$$
+CV_{(k)} = \frac{1}{k} \sum_{i=1}^k MSE_i
+$$
+
+k-fold CV is equivalent to LOOCV when $k=n$. 
+
+Advantage of k-fold CV: computationally less expensive than LOOCV.
+
+\subsubsection{Bias-Variance Trade-Off for k-Fold CV}
+
+ An important advantage of k-fold CV is that it often gives more accurate estimates of the test error rate than does LOOCV. This has to do with a bias-variance trade-off. From the perspective of bias reduction, it is clear that LOOCV is to be preferred to k-fold CV. However, LOOCV has a higher variance then k-fold CV because LOOCV results are highly correlated with one another because the procedure uses most of the same data set. k-FOld will be less correlated since the overlap is smaller.
+
+ Typically, $k=5$ or $k=10$ is preferred because it has been shown empirically to yield test error rate estimates that suffer neigther from high bias or high variance.
+
+ \subsubsection{Cross-Validation on Classification Problems}
+
+ Works similar to regressions methods but instead of calculating MSE you calculate the error, such as accuracy or kappa.
+
+ \subsection{The Bootstrap}
+
+ Statistical tool for quantifying uncertainty associated with a given estimator or statistical learning method. (e.g. calculating standard errors). The procedure involves repeatedly sampling from the original data set (with replacement) and estimate to get the parameter of interest. From the number of repetitions, the uncertainty can be computed by taking the standard deviations of the mean (standard error). This can then be used to calculate confidence intervals.
+
+ \section{Linear Model Selection and Regularization}
+
+  
+
+
+
