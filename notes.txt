@@ -61,24 +61,24 @@ Our goal is to apply statistical learning method to train data to estimate and u
 
 Examples:
 \begin{itemize}
-	\item Logistic Regression
-	\item Linear Discriminant Analysis
-	\item Perceptron
-	\item Naive Bayes
-	\item Simple Neural Networks
+\item Logistic Regression
+\item Linear Discriminant Analysis
+\item Perceptron
+\item Naive Bayes
+\item Simple Neural Networks
 \end{itemize}
 
 Advantage: simplifies estimating $f()$ because it is easier to estimate a set of parameters, $\beta_0, \beta_1$.
 
 Disadvantage: model does not usually match $f()$.
 
-\noindent \textbf{Non-Parametric}: Methods do not make explicit assumptions about the functional form of $f()$. Goal is to get as close to the data points as possible without being to rough or widdly.
+\noindent \textbf{Non-Parametric}: Methods do not make explicit assumptions about the functional form of $f()$. Goal is to get as close to the data points as possible without being to rough or wiggly.
 
 Examples:
 \begin{itemize}
-	\item k-Nearest Neighbors
-	\item Decision Trees like CART and C4.5
-	\item Support Vector Machines
+\item k-Nearest Neighbors
+\item Decision Trees like CART and C4.5
+\item Support Vector Machines
 \end{itemize}
 
 Advantage: potential to accurately fit a wider range of possible shapes for $f()$.
@@ -420,7 +420,6 @@ Three approaches exist to validate model selection:
 \item Backward selection: start with all variables and remove variables that are the least stat sign.
 
 \item Mixed selection: combination of forward and backward selection. Start with no variables, add variables that provides the best fit, but only add variables below a certain threshold.
-
 \end{itemize}
 
 \paragraph{3. Model Fit}
@@ -721,7 +720,7 @@ Generally, estimating $\pi_k$ is easy if we hae a random sample of $Y$s from the
  With only one predictor, assuming a normal or Gaussian, it is simlpy to estimate the normal density. 
 
 \begin{center}
-\includegraphics[width = 5in]{figures/LDA_normal}
+\includegraphics[width = 5in]{figures/LDA_normal.png}
 \end{center}
 
 In practice, even if we are quite certain of our assumption that X is drawn from a Gaussian distribution within each class, we still have to estimate the parameters $\mu_1,...,\mu_K, \pi_1,...,\pi_K, and \sigma^2$. The linear discriminant analysis (LDA) method approximates the Bayes classifier by plugging estimates for $\pi_k, \mu_k, and \sigma^2$ as follows,
@@ -757,7 +756,7 @@ In the case of $p > 1$ predictors, the LDA classifier assumes that the observati
 \noindent \textbf{Problem:} binary classifiers, such as LDA, can make two types of errors: (1) can incorrectly assign an individual who defaults to the no default category, or (2) it can incorrectly assign an individual who does not default to the default category. The solution to this is a confusion matrix,
 
 \begin{center}
-\includegraphics[width = 5in]{figures/confusion_matrix}
+\includegraphics[width = 5in]{figures/confusion_matrix.png}
 \end{center}
 
 \noindent which describes the number predicted correctly versus not to compare strength of the model. 
@@ -767,7 +766,7 @@ While the Bayes' Classifier will provide lowest error rate, it doesn't always do
 The ROC cuvrve (receiver operating characteristics) is used to simultaneously display the two types of errors for all thresholds. The performance is based on the area under the curve (AUC) of the ROC. ROC curves are useful for comparing different classifiers.
 
 \begin{center}
-\includegraphics[width = 5in]{figures/roc_curve}
+\includegraphics[width = 5in]{figures/roc_curve.png}
 \end{center}
 
 \subsubsection{Quadratic Discriminant Analysis (QDA)}
@@ -777,7 +776,7 @@ Like LDA, the QDA classifier results from assuming that the observations from ea
 Generally, LDA is more flexible with a lower variance, so model performance is improved over QDA. However, with larger training sets, QDA may perform better, so the variance is not of concern.
 
 \begin{center}
-\includegraphics[width = 5in]{figures/lda_vs_qda}
+\includegraphics[width = 5in]{figures/lda_vs_qda.png}
 \end{center}
 
 \subsection{Comparison of Classification Methods}
@@ -861,7 +860,112 @@ Advantage of k-fold CV: computationally less expensive than LOOCV.
 
  \section{Linear Model Selection and Regularization}
 
-  
+ Before moving on to nonlinear models, we deal with replacing plain least squares fitting with alternative fitting problems.
+
+ Reasons to use another fitting procedure:
+
+\begin{itemize}
+\item \textbf{Prediction Accuracy:} Relationship between response and prediction is based on assumptions in model. By constraining or shrinkig the estimated coefficients, w can reduce teh variance at the cost of a negligible increase in bias, which can improve prediction accuracy.
+\item \textbf{Model Interpretability:} Variables that are irrelvant lead to unnecessary complexity in the model, so it is best to remove them to improve interpretability.
+\end{itemize} 
+
+Three methods for feature/variable selection:
+
+\begin{itemize}
+\item \textbf{Subset Selection:} identify a subset of predictors that are related to the response.
+\item \textbf{Shrinkage:} coefficients are shrunken towards zero relative to the least squares estimates, thus reducing the variance. Depending on shrinkage, some coefficients may be zero, so can be used for feature selection.
+\item \textbf{Dimension Reduction:} projecting predictors through linear combinations which are used as predictors to fit a linear model.
+\end{itemize}
+
+\subsection{Subset Selection}
+
+\subsubsection{Best Subset Selection}
+
+Fit a linear model for each combination of predictors and identify the one that is best through AIC, BIC, R2, RSE. However, as predictors are added R2 increases and RSS decreases. For this reason, cross-validation is used to validate model selection.
+
+Subset selection can be computationally costly, so there are efficient alternatives.
+
+\subsubsection{Stepwise Selection}
+
+\begin{itemize}
+\item Forward selection: start with intercept with no predictors and add variables that minimize the RSS.
+
+\item Backward selection: start with all variables and remove variables that are the least stat sign.
+
+\item Mixed selection: combination of forward and backward selection. Start with no variables, add variables that provides the best fit, but only add variables below a certain threshold.
+\end{itemize}
 
 
+\subsubsection{Choosing the Optimal Model}
+
+RSS and R2 are not suitable for model selection because more variables will be the preferred model. Best to calculate the test error,
+
+\begin{itemize}
+\item indirectly estimate test error by making adjustments to the training error to account for bias due to overfitting
+\item directly estimate the test error using validation or cross-validation
+\end{itemize}
+
+\paragraph{Cp, AIC, BIC, and Adjusted R2}
+
+Four approaches exist for adjusting the training error, Cp, AIC, BIC, Adjusted R2.
+
+The $C_p$ estimate of the test MSE is computed as,
+
+$$
+C_p = \frac{1}{n}(RSS + 2d \hat{\sigma}^2)
+$$
+
+\noindent where $d$ is number of predictors.
+
+$C_p$ statistic adds a penalty to $2d \hat{\sigma}^2$ to the training RSS in order to adjust for the fact that the training error tends to understimate the error. The penalty increases as number of predictors which adjusts for the corresponding decrease in RSS as predictors are added.
+
+AIC criterion is defined as,
+
+$$
+AIC = \frac{1}{b \hat{\sigma}^2} (RSS + 2 d \hat{\sigma}^2)
+$$ 
+
+BIC is derived from Bayesian point of view,
+
+$$
+BIC = \frac{1}{b \hat{\sigma}^2}(RSS + log(n)d \hat{\sigma}^2)
+$$
+
+
+Adjusted $R^2$ incorporates RSS and RSS but with $n$ and $d$.
+
+$$
+Adjusted R^2 = 1 - \frac{RSS/(n-d-1)}{TSS/(n - 1)}
+$$
+
+The intuution behind the adjusted R2 is that once all of the correct variables have been included in the model, adding additional noice variables will lead to only a very small decrease in RSS. In theory, the model with the largest adjusted R2 will have only correct ariables and no noice variables. (R2 is generally not used over AIC, BIC or $C_p$).
+\textit{Note: A small value for $C_p, AIC, and BIC$ indicates a model with a low test error. A large value for adjusted R2 indicates a model with a small test error.}
+
+\paragraph{Validation and Cross-validation}
+
+We can compute the validation set error or the cross-validation error for each model under consideration, and then select the model for which the resulting estimated test error is smallest. This procedure has an advantage relative to AIC, BIC, Cp, and adjusted R2, in that it provides a direct estimate of the test error, and makes fewer assumptions about the true underlying model. It can also be used in a wider range of model selection tasks, even in cases where it is hard to pinpoint the model degrees of freedom (e.g. the number of predictors in the model) or hard to estimate the error variance $\sigma^2$.
+
+However, cross-validation is computationally expensive, but is generally preferred.
+
+\noindent \textbf{One-standard error rule:} Calculate the standard error of the estimated test MSE for each model size, then select the msallest model wher ethe test error is within one standard error of the lowest point on the curve. If models are more or less equally good, then we want the simplest model.
+
+\subsection{Shrinkage Methods}
+
+Instead of cross-validating models with combinations of preditors, we can estimate a model with all predictors and contrain or regularize the coefficients toward zero.
+
+\subsubsection{Ridge Regression}
+
+Ridge regression is similar to least squares expect the minimaztion problem includes a tuning parameter, $\lambda$.
+
+$$
+\sum_{i=1}^n (y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij}) + \lambda \sum{j=1}^p \beta_j^2 = RSS + \lambda \sum_{j=1}^p \beta_j^2
+$$
+
+\noindent where $\lambda \geq 0$ is the tuning parameter. Ridge regression reduces RSS but incorporates a shrinkage term $\lambda \sum_j \beta_j^2$. The tuning parameteric seres to control the relative impact o these two terms on the regression coefficient estimates. 
+
+When $\lambda=0$ the penalty term has no effect, which reduces to OLS.  As $\lambda$ increases to infinity, the impact of the shrinkage penalty grows and the coefficients will approach zero.
+
+\noindent \textbf{Note: Shrinkage does not apply to the intercept.}
+
+\paragraph{Why Does Ridge Regression Improve Over Least Squares?}
 

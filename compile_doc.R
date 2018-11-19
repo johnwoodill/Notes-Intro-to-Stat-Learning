@@ -1,10 +1,10 @@
-setwd("/Users/john/Projects/Notes-Intro-to-Stat-Learning/")
+setwd("/Users/john/pCloud Drive/Projects/Notes-Intro-to-Stat-Learning/")
 
 # Header file with abstract
-top <- "/Users/john/Projects/Intro to Stat Learning/header.tex"
+top <- "/Users/john/pCloud Drive/Projects/Intro to Stat Learning/header.tex"
 
 # Document text
-doc <-  "/Users/john/Projects/Intro to Stat Learning/notes.txt"
+doc <-  "/Users/john/pCloud Drive/Projects/Intro to Stat Learning/notes.txt"
 
 # Merge config file
 system("cat header.tex notes.txt > Notes-Intro-to-Stat-Learning.tex")
@@ -19,4 +19,3 @@ system("rm Notes-Intro-to-Stat-Learning.tex")
 system("rm Notes-Intro-to-Stat-Learning.log")
 system("rm Notes-Intro-to-Stat-Learning.aux")
 # system("rm Notes-Intro-to-Stat-Learning.toc")
-
