@@ -955,10 +955,10 @@ Instead of cross-validating models with combinations of preditors, we can estima
 
 \subsubsection{Ridge Regression}
 
-Ridge regression is similar to least squares expect the minimaztion problem includes a tuning parameter, $\lambda$.
+Ridge regression is similar to least squares expect the minimization problem includes a tuning parameter, $\lambda$.
 
 $$
-\sum_{i=1}^n (y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij}) + \lambda \sum{j=1}^p \beta_j^2 = RSS + \lambda \sum_{j=1}^p \beta_j^2
+\sum_{i=1}^n (y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij})^2 + \lambda \sum{j=1}^p \beta_j^2 = RSS + \lambda \sum_{j=1}^p \beta_j^2
 $$
 
 \noindent where $\lambda \geq 0$ is the tuning parameter. Ridge regression reduces RSS but incorporates a shrinkage term $\lambda \sum_j \beta_j^2$. The tuning parameteric seres to control the relative impact o these two terms on the regression coefficient estimates. 
@@ -968,4 +968,36 @@ When $\lambda=0$ the penalty term has no effect, which reduces to OLS.  As $\lam
 \noindent \textbf{Note: Shrinkage does not apply to the intercept.}
 
 \paragraph{Why Does Ridge Regression Improve Over Least Squares?}
+
+Ridge regression’s advantage over least squares is rooted in the bias-variance trade-off. As $\lambda$ increases, the flexibility of the ridge regression fit decreases, leading to decreased variance but increased bias -- the shrinkage of the ridge coefficient estimates leads to a substantial reduction in the variance of the predictions, at the expense of a slight increase in bias.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/ridge_bias_var}
+\end{center}
+
+In situations where the relationship between the response and the predictors is close to linear, the least squares estimates will have low bias but may have high variance. With a large number of predictors versus number of observations, linear regression will be extremely variable. Ridge regressions performs well by reducing the variance with only a slight increase in bias; thus, ridge regressions work best in situations where the least squares estimates have high variance.
+
+One disadvantage of ridge regression is the model will always include all predictors as opposed to subset of variables through recursive selection.
+
+\subsubsection{The Lasso}
+
+THe lasso is an alternative to the ridge regression that allows predictors to equal zero.
+
+$$
+\sum_{i=1}^n (y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij})^2 + \lambda \sum{j=1}^p |\beta_j| = RSS + \lambda \sum_{j=1}^p |\beta_j|
+$$
+
+The main difference between ridge and lasso is that $\beta_j^2$ is replaced with $|\beta_j|$. Similarly, the lasso regressions shrinks coefficients towards zero and can include zero. Lasso produces sparse models or models that involve only a subset of the variables. Selecting $\lambda$ is done in the same way too.
+
+\paragraph{Comparing the Lasso and Ridge Regression}
+
+The lasso leads to qualitatively similar behavior to ridge regression, in that as $\lambda$ increases, the variance decreases and the bias increases. 
+
+\noindent \textbf{Note:}  In general, one might expect the lasso to perform better in a setting where a relatively small number of predictors have substantial coefficients, and the remaining predictors have coefficients that are very small or that equal zero. Ridge regression will perform better when the response is a function of many predictors, all with coefficients of roughly equal size. However, the number of predictors that is related to the response is never known a priori for real data sets. A technique such as cross-validation can be used in order to determine which approach is better on a particular data set.
+
+\subsubsection{Selecting the Tuning Parameter}
+
+ Cross-validation provides a simple way to tackle this problem. We choose a grid of $\lambda$ values, and compute the cross-validation error for each value of $\lambda$.  We then select the tuning parameter value for which the cross-validation error is smallest. Finally, the model is re-fit using all of the available observations and the selected value of the tuning parameter.
+
+ \subsection{Dimension Reduction Methods}
 
