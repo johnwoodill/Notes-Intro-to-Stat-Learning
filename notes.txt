@@ -1001,3 +1001,109 @@ The lasso leads to qualitatively similar behavior to ridge regression, in that a
 
  \subsection{Dimension Reduction Methods}
 
+Dimension reductions methods transform the predictors and then fit a least squares model using the transformed variable.
+
+$$
+Z_m = \sum_{j=1}^p \phi_{jm} X_j
+$$
+
+\noindent where $Z_m$ represent linear combinations of original predictors $p$ and constants, $\phi_{jm}$. $Z_m$ are used to fit the linear regression model and can lead to better results than fitting using least squares.
+
+Dimension reduction serves to constrain the estimated $\beta_j$ coefficients, but can bias the coefficients. However, when predictors, $p$, is large relative to $n$, selecting $M << p$ can reduce the variance of the fitted coefficients. 
+
+If $M= p$ no dimension reduction occurs and same as least squares with original predictors.
+
+\subsubsection{Principal Components Regression}
+
+PCA is a technique for reducing the dimension of $X$. The first component PC1 vary the most, then PC2, ... PCN. Or, in other words \textit{the first principal component vector defines the line that is as close as possible to the data (original observations) and captures most of the information contanined in the data}. 
+
+\begin{center}
+\includegraphics[width = 5in]{figures/pca1}
+\end{center}
+
+\paragraph{The Principal Components Regression Approach}
+
+PCR involves constructing the first $M$ princpals $Z_1, ... Z_m$ and using components as the predictors in a linear regression model. A small number of principals are selected that explain most of the variability in the data. 
+
+If assumptions underlying PCR holds, then using principal components instead of original predictors will lead to better results. Further, reducing dimensions can mitigate overfitting.
+
+The following figure shows that as more principal components are used the bias decreases, but the variance increases. This can result in substantial improvements over least squares.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/pca2}
+\end{center}
+
+However, contrast to ridge/lasso results show PCR does not perform as well. The worst performance of PCR is a consequence of using many principal components. PCR will do better when the first few principals components explain most of the variation. PCR number of components are selected using cross-validation.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/pca3}
+\end{center}
+
+\noindent \textbf{Note:} PCR is not a feature selection method, which does not result in the development of a model that relies on a small set of the original features. 
+
+Principal components are standardized to ensure all variables are on the same scale. Without standardization, high-variance variables will tend to play a larger role in the principal components obtained.
+
+A major drawback of PCA is there is no guarantee that the directions that best explain the predictors will also be the best directions for use for predicting the response (unsupervised learning methods).
+
+\subsubsection{Partial Least Squares}
+
+PLS overcomes the limitations of PCA by making use of the response $Y$. PLS attemps to find directions that help explain both the response and the predictors through dimension reduction similar to PCA (supervised learning method).
+
+Steps to compute PLS:
+\begin{itemize}
+\item Standardize predictors and response.
+\item Compute first direction $Z_1$ by setting each constant, $\phi_{j1}$, equal to the coefficient from OLS.
+\item PLS places the highest weight on the variables that are most stronly related to the response.
+\end{itemize}
+
+\begin{center}
+\includegraphics[width = 5in]{figures/pls1}
+\end{center}
+
+\noindent \textbf{Note:} PLS does not fit the predictors as closely as PCA, but it does a better job explaining the response.
+
+The second PLS direction is calculated by first adjusting each of the variables for $Z_1$ by regressing each variable on $Z_1$ and obtaining th residuals. The residuals are interpreted as the remaining information that has not been explained by the first PLS direction. $Z_2$ is computed using the \textit{orthoganalized data}. This process is continued through each direction.
+
+\noindent \textbf{The number of directions used are chosen through cross-validation.}
+
+While supervised dimension reduction of PLS can reduce bias, it also increases the variance so the benefits of PLS relative to PCR are a wash.
+
+\subsection{Considerations in High Dimensions}
+
+High dimension data is defined as more predictors, $p$, than number of observations, $n$. As a result, classical approaches, such as OLS, are not appropriate.
+
+\subsubsection{What Goes Wrong in High Dimensions?}
+
+In high dimension data, least squares will yield a set of coefficient estimates that result in a perfect fit to the data (residuals = 0). This will lead to overfitting and low performance on test predictions.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/high_dim1}
+\end{center}
+
+When performing cross-validation on models, $C_p$, AIC, and BIC approaches are not appropriate because estimate $\hat{\sigma}^2$ is problematic. $R^2$ is also problematic because fit will equal 1.
+
+\subsubsection{Regression in High Dimensions}
+
+Models for fitting less lexible least squares are useful for performing regression in high-dimensions, such as forward stepwise selection ,ridge, lasso, and PCR. These methods avoid overfitting by using less flexible fitting approaches than least squares.
+
+The following figure highlights three important points: 
+
+(1) regularization or shrinkage plays a key role in high-dimensional problems, 
+
+(2) appropriate tuning parameter selection is crucial for good predictive performance, and 
+
+(3) the test error tends to increase as the dimensionality of the problem (i.e. the number of features or predictors) increases, unless the additional features are truly associated with the response.
+
+\noindent \textbf{Curse of Dimensionality}: noisy features increase the dimensionality of the problem, exacerbating the risk of overfitting (noice features may be assigning nonzero coeffcieints due to change).
+
+\textbf{Note:} adding additional signal features associated with the response will improve the fitted model, but noisy features will lead to deterioration of the fitted model and increase the test error.
+
+\subsubsection{Interpreting Results in High Dimensions}
+
+In high-dimensional settings, multicollinearity problem is extreme: any variable in the model can be written as a linear combination of all of the other variables in the model.
+
+Essentially, this means that we can never know exactly which variables (if any) truly are predictive of the outcome, and we can never identify the best coefficients for use in the regression. 
+
+It is important to take care when reporting errors and measure of model fit in high-dim settings. When number of predictors is larger than number of observations, it is easy to obtain a useless model that has zero residuals.
+
+\noindent \textbf{Note: } Never use sum of squares errors, p-values, $R^2$, or other traditional measure of model fit. It is important to report results on an independent test set, or cross-validation errors. 
