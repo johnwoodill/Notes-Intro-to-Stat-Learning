@@ -1107,3 +1107,122 @@ Essentially, this means that we can never know exactly which variables (if any) 
 It is important to take care when reporting errors and measure of model fit in high-dim settings. When number of predictors is larger than number of observations, it is easy to obtain a useless model that has zero residuals.
 
 \noindent \textbf{Note: } Never use sum of squares errors, p-values, $R^2$, or other traditional measure of model fit. It is important to report results on an independent test set, or cross-validation errors. 
+
+\section{Moving Beyond Linearity}
+
+In this chapter we relax the linearity assumption while still attempting to maintain as much interpretability as possible. We do this by examining very simple extensions of linear models like polyno- mial regression and step functions, as well as more sophisticated approaches such as splines, local regression, and generalized additive models.
+
+\begin{itemize}
+\item Polynomial regression: extends linear model by adding extra predictors, such as $X, X^2, X^3$
+\item Step Function: cut the range of variables into K distinct regions (fitting a piecewise constant function)
+\item Regression Splines: more flexible than polynomials and step functions. Involved dividing the range of $X$ and $K$ distinct regions, fit a polynomial that join smooths the boundaries, or \textit{knots}.
+\item Smoothing Splines: Similar to regression splines, but minimizing a residual sum of squares subject to smoothness penatly.
+\item Local Regression: similar to splines, but regions are allowed to overlap
+\item Generalized Additive Models (GAM): extend methods above to deal with multiple predictors.
+\end{itemize}
+
+\subsection{Polynomial Regression}
+
+A polynomial function follows,
+
+$$
+y_i = \beta_0  + \beta_1 x_1 + \beta_2 x_i^2 + ... + \beta_d x_i^d + \epsilon_i
+$$
+
+\noindent with a large enough $d$, this regression can produce a highly non-linear curve, but usually don't want to use larger than 4 because will produce overly flexible fits.
+
+\subsection{Step Function}
+
+We can use step function in order to avoid imposing a global structure such as in a linear model. Here we break the range of $X$ into bins or cut points $c_1, c_2, ..., c_K$, and fit a different constant in each bin from a continuous variable into an \textit{ordered catergorical variable}.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/step_fn_eq}
+\end{center}
+
+\noindent where $I(\cdot)$ is an indicator function that returns a 1 if the condition is true and 0 otherwise (dummy variables). We then fit a linear model as,
+
+$$
+y_i = \beta_0 + \beta_1 C_1(x_i) + \beta_2 C_2 (x_i) + ... + \beta_K C_K (x_i) + \epsilon_i
+$$
+
+A limitation of step-function regressions is that unless there is a natural cut (breakpoint) in the predictors, piece-wise-constant functions can miss the action. See left panel below where the first bin clearly misses the increasing trend.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/step_fn_fig}
+\end{center}
+
+\subsection{Basis Function}
+
+Polynomial and piecewise-constant regression models are in fact special cases of a basis function approach where the variables are transformed,
+
+$$
+y_i = \beta_0 + \beta_1 b_1(x_1) + ... + \beta_K b_K (x_i) + \epsilon_i
+$$
+
+\noindent where $b_K(\cdot)$ are fixed and known. Utilizing a linear regression in this way provides an easy estimate for polynomial and step-function regressions, so inference tools such as s.e., f-stats, etc. are available.
+
+\subsection{Regression Splines}
+
+Regression splines provide flexible classes of the basis functions.
+
+\subsubsection{Piecewise Polynomials}
+
+Piecewise polynomial regressions involve fitting separate low-degree polynomials over different regions of $X$. A piecewise cubic polynomial with a single know at a point $c$ takes the form, 
+
+\begin{center}
+\includegraphics[width = 5in]{figures/piecewise_eq}
+\end{center}
+
+Here, we fit two different polynomial functions based on the subset of observations at cut $c$. More knots leads to a more flexible piecewise polynomial. For $K$ knots, we fit $K+1$ different cubic polynomials. 
+
+\noindent Note: when $K=0$, this produces a piecewise linear function.
+
+Note that in the figure below, the top left panel provides a piece wise cubic function that is not smooth across age. The discontinuity can be a problem, so it is best to use a continous piecewise cubic that constrains the polynomial to be continuous; although, notice it is not perfectly continuous.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/regression_splines_fig1}
+\end{center}
+
+\subsubsection{Constraints and Splines}
+
+Another way to constrain the function form is to allow for a first and second derivative. A benefit to this is that it frees up degrees of freedom. A cubic spline (lower left in figure above) reduces the complexity of the piecewise polynomial which uses $K$ knots and ensures continuity across the polynomial. Similarly, a linear spline provides continuity in the derivative up to the degree at each knot (lower right panel in figure above).
+
+\subsubsection{The Spline Basis Representation}
+
+How do you fit a polynomial with a first and second derivative? A basis model can represent a regression spline under these conditions which can then be fit with a linear regression.
+
+$$
+y_i = \beta_0 + \beta_1 b_1(x_1) + ... + \beta_{K+3} b_{K+3} (x_i) + \epsilon_i
+$$
+
+The way to fit this type of basis function is to start off with a basis for a cubic polynomial ($x, x^2, x^3$) then add a \textit{truncated power basis} function per knot,
+
+\begin{center}
+\includegraphics[width = 5in]{figures/spline_regression_basis_eq}
+\end{center}
+
+\noindent where $\xi$ is the knot. This results in a least squares regression with an intercept and $3 + K$ predictors: (1) $X, X^2, X^3$; (2) $h(X, \xi_1), h(X, \xi_2), h(X, \xi_3)$ where $xi_1, ..., \xi_K$ are knots.
+
+A limitation to splines is they can have high variance at the outer range of the predictors. A \textit{natural spline} is a regression spline where the function is required to be linear on the boundaries; thus, producing more stable estimates on the boundaries.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/spline_figure}
+\end{center}
+
+\subsubsection{Choosing the Number and Locations of the Knots}
+
+It is common to place knots in uniform quantiles across the variable. The number of knots depends on how best the spline fits the data. This is generally done through cross-validating RSS.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/spline_cv}
+\end{center}
+
+\subsubsection{Comparison to Polynomial Regression}
+
+Regression splines often give superior results to polynomial regressions because spline introduce flexibility by increasing the number of knots but keeping the dgree fixed, thus producing more stable estimates. Splines also allow us to place more knots, and hence flexibility, over regions where the function $f$ seems to be changing rapidly, and fewer knots where $f$ appears more stable.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/poly_vs_spline}
+\end{center}
+
+\subsection{Smoothing Splines}
