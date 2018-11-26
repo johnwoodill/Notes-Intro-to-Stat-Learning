@@ -1226,3 +1226,141 @@ Regression splines often give superior results to polynomial regressions because
 \end{center}
 
 \subsection{Smoothing Splines}
+
+\subsubsection{An Overview of Smoothing Splines}
+
+In fitting a smooth curve, we want a function, $g(x)$, that fits the data well where we seek to solve,
+
+$$
+RSS = \sum_{i=1}^n (y_i - g(x_i))^2
+$$
+
+\noindent However, if we put constraints on $g(x)$ then the functional form will fit the data perfectly (overfit), thus RSS will equal zero. What we want is a function that makes RSS small, but that is also smooth.
+
+A natural approach is to minimize, 
+
+$$
+\underbrace{\sum_{i=1}^n (y_i - g(x_i))^2}_{\text{Loss Function}} + \underbrace{\lambda \int g''(t)^2 dt}_{\text{Penalty Term}}
+$$
+
+\noindent where $\lambda$ is a nonnegative tuning parameter. The function $g(\cdot)$ that minimizes the previous equation is the smoothing spline.
+
+Note: The first derivative $g'(t)$ measures the slope of a function at t, and the second derivative corresponds to the amount by which the slope is changing. Hence, broadly speaking, the second derivative of a function is a measure of its roughness: it is large in absolute value if $g(t)$ is very wiggly near $t$, and it is close to zero otherwise.
+
+In other words, $\int g''(t)^2 dt$ is simply a measure of the total change in the function $g'(t)$ over it's entire range. If $g$ is very smooth, then $g'(t)$ will be close to constant and $g''(t)^2$ will take on a small value.  Conversely, if $g$ is jumpy and variable then $g'(t)$ will vary significantly and  $g''(t)^2 dt$ will take on a large value. The larger the value of $\lambda$, the smoother $g$ will be.
+
+The function $g(x)$ that solves the minimization problem has specific properties,
+
+\begin{itemize}
+\item is a piecewise cubic polynomial with knots at the unique values of $x_1, ..., x_n$
+\item continuous first and second derivatives at each knot
+\item linear in the region outside of the extreme knows
+\end{itemize}
+
+\textbf{Note: In other words, the function $g(x)$ that minimizes the problem is a natural cubic spline with knots at $x_1, ..., x_n$. This is not the same natural cubic spline applied using the basis function in a linear regression.}
+
+\subsubsection{Choosing the Smoothing Parameter $\lambda$}
+
+The tuning parameter $\lambda$ controls the roughness of the smoothing spline, thus the effective degrees of freedom, $df_{\lambda}$. $df_{\lambda}$ is a measure of the flexibility of the smoothing spline -- the higher it is, the more flexible (and the lower-bias but higher-variance) the smoothing spline is. The definition of $df_{\lambda}$ can be written as,
+
+$$
+\hat{\textbf{g}}_{\lambda} = \textbf{S}_{\lambda} \textbf{y}
+$$
+
+\noindent where the vector of fitted values when applying a smoothing spline to the data canbe written as an $n x n$ matrix $\textbf{S}_{\lambda}$ times the response vector $\textbf{y}$. Therefore, the effective degrees of freedom is defined to be the sum of the diagonal elements of the matrix $\textbf{S}_{\lambda}$
+
+$$
+df_{\lambda} = \sum_{i=1}^n \{\textbf{S}_{\lambda}\}_{ii}
+$$
+
+When fitting a smoothing spline, it is not necesssary to choose the number of knots, but instead the value of $\lambda$, which is chosen through cross-validation by making RSS as small as possible. This is done using LOOCV, which is the same cost as computing a single fit, using the following formula,
+
+$$
+RSS_{cv}(\lambda) = \sum_{i=1}^n (y_i - \hat{g}_{\lambda}^{(-i)}) = \sum_{i=1}^n [\frac{y_i - \hat{g}_{\lambda}(x_i)}{1 - \{\textbf{S}_{\lambda} \}_{ii}}]^2
+$$
+
+\noindent where $\hat{g}_{\lambda}^{(-i)}$ represents the fitted value for the smoothing spline evaluated at $x_i$ for all training data except for the $i$th observation. In contrast,  $\hat{g}_{\lambda}(x_i)$ represents the smoothing spline function fit to all of the training observations and evaluated at $x_i$.
+
+\textbf{Note:} The forumla suggests that we can compute each of these LOOCV fits using only $\hat{g}_{\lambda}$, the original fit to all of the data. Notice in the figure below that LOOCV provides a reasonable estimate of the data while reducing effective degrees of freedom.
+
+
+\begin{center}
+\includegraphics[width = 5in]{figures/smoothing_spline_fig}
+\end{center}
+
+\subsection{Local Regression}
+
+Local regression is a different approach for fitting flexible non-linear func- tions, which involves computing the fit at a target point x0 using only the nearby training observations. To obtain the local regression fit at a new point, we need to fit a new weighted least squares regression model by minimizing for a new set of weights. Local regression is sometimes referred to as a memory-based procedure, because like nearest-neighbors, we need all the training data each time we wish to compute a prediction.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/local_reg_fig}
+\end{center}
+
+Things to consider:
+
+\begin{itemize}
+\item how to define the weighting function $K$
+\item whether to fit a linear, constant, or quadratic regression
+\item (Most important) defining span, $s$, that controls the flexibility of the non-linear fit.
+\end{itemize}
+
+\noindent The smaller the value of $s$, the more local and wiggly the fit will bit. Cross-validation is used to determine the optimal value of $s$.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/local_reg_alg}
+\end{center}
+
+\textit{Varying coefficient model} is a way to adapt a model to the most recently gathered data. 
+
+\noindent \textbf{Local regressions can perform poorly when p-dimensional neightborhoods are small, say 3 or 4, because there will generally be very few training observations close to $x_0$ or the observation being interpolated.}
+
+\begin{center}
+\includegraphics[width = 5in]{figures/local_reg_span}
+\end{center}
+
+\subsection{Generalized Additive Models (GAM)}
+
+Generalized additive models (GAMs) provide a general framework for extending a standard linear model by allowing non-linear functions of each of the variables, while maintaining additivity. GAMs can be applied to both quantitative and qualitative respones.
+
+\subsubsection{GAMs for Regression Problems}
+
+In order to allow for non-linear relationships between each feature and the response it is best to replace each linear component $\beta_j x_{ij}$ with a smooth non-linear function $f_j (x_{ij}$. An \textit{additive} model, GAM, can be written as,
+
+$$
+y_i = \beta_0 + f_1 (x_{i1}) + f_2 (x_{i2}) + ... + f_p (x_{ip}) + \epsilon_i
+$$
+
+It is called an additive model because we \textbf{calculate a separate $f_j$ for each $X_j$ and then add together all of their contributions}.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/GAM_fig1}
+\end{center}
+
+A GAM regression model using a natural spline is simply a linear regression where covariates are fit using a function form of the data $f_p (x_{ip})$. However, fitting a GAM model with a smoothing spline is not as simple and is usually fit using backfitting. 
+
+\textbf{backfitting: involves multiple predictors by repeatedly updating the fit for each predictor in turn, holding the others fixed.}
+
+Generally, the differences in GAMs using smoothing splines versus natural splines are small.
+
+Pros and Cons of GAMs:
+
+\begin{itemize}
+\item (Pros) Do not need to manually try out many different transofmrations of each variable because the fit is automatrically modeled in a non-linear framework.
+\item (Pros) Can be more accurate 
+\item (Pros) Because the model is additive, we can exame the effects of each covariate on the response by holding all other variables fixed.
+\item (Pros) smoothness of function can be summarized via degrees of freedoms
+\item (Cons) Model is restricted to be additive, thus with many variables important interactions can be missed; although, we can simply add interactions to the model to account for the missing interactions.
+\end{itemize}
+
+\subsubsection{GAMs for Classification Problems}
+
+GAMs can also be used in situations where Y is qualitative, such as,
+
+$$
+log(\frac{p(X)}{1- p(X)}) = \beta_0 + \beta_1 X_1 + ... \beta_p X_p
+$$
+
+\begin{center}
+\includegraphics[width = 5in]{figures/GAM_classification}
+\end{center}
+
