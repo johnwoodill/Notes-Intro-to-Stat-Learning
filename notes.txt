@@ -1364,3 +1364,9 @@ $$
 \includegraphics[width = 5in]{figures/GAM_classification}
 \end{center}
 
+\textbf{Differences between poly, spline, and GAM:}
+\begin{itemize}
+\item Poly: Fits a specific quadratic functional form; solved through OLS
+\item Spline Regression: Fit using specific functional forms (natural spline, basis spline); solved through OLS
+\item GAM: Fits each covariate through a nonlinear functional form using high number of degrees; solved through penalty using $\lambda$ tuning parameter and integral of second derivative. 
+\end{itemize}
