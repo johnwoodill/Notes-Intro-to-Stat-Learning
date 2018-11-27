@@ -14,6 +14,8 @@ def poly(x, p):
 # Load data
 dat = pd.read_csv('data/Wage.csv')
 
+agegrid= np.arange(dat.age.min(), dat.age.max()).reshape(-1,1)
+
 # Basis spline
 t_X = dmatrix("bs(dat.age, knots=(25, 40, 60), degree=3, include_intercept=False)")
 
