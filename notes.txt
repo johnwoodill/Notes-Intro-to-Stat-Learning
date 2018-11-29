@@ -1370,3 +1370,96 @@ $$
 \item Spline Regression: Fit using specific functional forms (natural spline, basis spline); solved through OLS
 \item GAM: Fits each covariate through a nonlinear functional form using high number of degrees; solved through penalty using $\lambda$ tuning parameter and integral of second derivative. 
 \end{itemize}
+
+\section{Tree-Based Methods}
+
+Tree-based methods stratify or segment the predictor space into a number of simple regions. In order to make a prediction for a given observation, we typically use the mean or the mode of the training observa- tions in the region to which it belongs. Decision trees are not as accurate as other methods, such as baggin, random forests and boosting which rely on estimating multiple trees and combining to produce predictions.
+
+\subsection{The Basics of Decision Trees}
+
+Can be applied to both regressions and classifications.
+
+\subsubsection{Regression Trees}
+
+Process of building a regression tree:
+
+\begin{itemize}
+\item Divide the predictor space ($X_1, X_2, ... X_p$) into $J$ distinct and non-overlapping regions, $R_1, ..., R_j$
+\item For every observation that falls into the region, $R_j$, we make the same prediction, which is simply the mean of the response values for the training observation, $R_j$
+\end{itemize}
+
+The primary goal of dividing the predictor space is to minimize the RSS,
+
+$$
+\sum_{j=1}^J \sum_{i \in R_j} (y_i - \hat{y_{R_j}})^2
+$$
+
+\noindent where $\hat{y_{R_j}}$ is the mean response for the training observations. This is computationally inffeasible to consider eveyr possible partition; therefore, we take a top-down approach know as recursive binary splitting.
+
+\textbf{Recursive Binary Splitting:} Starting at the top of the tree, successive splits of the predictor space split via two new branches down the tree. The best split is made at the particular step.
+
+To perform recursive binary splitting, the general outline is to consider all predictors, $X_1, ..., X_p$ and all possible values of the cutpoint $s$ for each of the predictors, and then choose the predictor and cutpoint such that the resulting tree has the lowest RSS. This is designated as,
+
+$$
+R_1(j,s) = \{X|X_j < \} and R_2 (j, s) = \{X|X_j \geq s \}
+$$
+
+\noindent and seeks to minimize,
+
+$$
+\sum_{i: x_i \in R_1 (j, s)} (y_i - \hat{y_{R_1}})^2 + \sum_{i: x_i \in R_2 (j, s)} (y_i - \hat{y_{R_2}})^2
+$$
+
+Next, repeat the rocess by looking for the best predictor and best cutpoint in order to split the data further so as to minimze the RSS within each of the resulting regions. However, we split one of the two prevoiously identified regions. The process continues until a stopping criterion is reach. Then predict responses.
+
+\paragraph{Tree Pruning}
+
+Splitting in such a way described above may produce good predictions but not on the test set. The tree may be too complex to produce out-of-sample predictive power. A smaller tree with few splits might lower variance and better interpretation at the cost of a little bias.
+
+A better strategy is to grow a very large tree and then prune back to obtain a subtree. However, this is computationally expensive, so \textit{cost complexity pruning or weakest link pruning} is one way to do this.
+
+\textbf{Cost complexity pruning or weakest link pruning}: Consider a sequence of trees indexed bya  nonnegative tuning parameter, $\alpha$.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/dt_fig1}
+\end{center}
+
+The goal is to include number of terminal nodes, $T$ when minimizing RSS,
+
+$$
+\sum_{m=1}^{|T|} \sum_{x_i \in R_m} (y_i - \hat{y_{R_m}})^2 + \alpha |T|
+$$
+
+The tuning parameter, $\alpha$, controls a trade-off between the subtree's complexity and its fit to the training data. As $\alpha$ increases, there is a price to pay for having a tree with many terminal modes. The tuning parameter is calculated using cross-validation.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/dt_fig2}
+\end{center}
+
+\subsubsection{Classification Trees}
+
+Classification trees are very similar to regression trees except the response is different. For a classification tree, we predict that each observation belongs to the most commonly occuring class of training observations in the region.
+
+Instead of RSS, classification trees use the error rate to optimize splitting. However, the classification error rate may not be appropriate, so a Gini index can be used instead,
+
+$$
+G = \sum_{k=1}^K \hat{p}_{mk} (1 - \hat{p}_{mk})
+$$
+
+\noindent which measures a total variance across the $K$ classes. Gini index is a measure of node purity where a small value indicates that a node contains predominantly observations from a single class.
+
+Entropy can also be used as an alternative to the Gini index,
+
+$$
+D = - \sum_{k=1}^K \hat{p}_{mk} log \hat{p}_{mk}
+$$
+
+A smaller value indicates the $m$th node is pure.
+
+Gini or entropy are used to evalue the quality of a particluar split. The classification error rate is preferable if prediction accuracy of the final pruned tree is the goal.
+
+Note: A split occurs when it increases node purity.
+
+\subsubsection{Trees Versus Linear Models}
+
+

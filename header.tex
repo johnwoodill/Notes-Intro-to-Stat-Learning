@@ -15,12 +15,14 @@
 \usepackage{gensymb}
 \usepackage{empheq}
 \usepackage{mathtools}
+%\usepackage{xcolor}
 \usepackage{lscape}
 \usepackage{systeme}
-
+%\usepackage[usenames, dvipsnames]{color}
 \usepackage{pdflscape}
 \usepackage{dcolumn}
-
+\usepackage{xcolor}
+\usepackage{sectsty}
 \usepackage{caption}
 \usepackage{appendix}
 \usepackage{subcaption}
@@ -32,7 +34,11 @@
 \usepackage{footmisc}
 \DefineFNsymbols{mySymbols}{{\ensuremath\dagger}{\ensuremath\ddagger}\S\P
    *{**}{\ensuremath{\dagger\dagger}}{\ensuremath{\ddagger\ddagger}}}
-\setfnsymbol{mySymbols}
+\definecolor{MyBlue}{HTML}{2D74AC}
+\sectionfont{\color{MyBlue}}  % sets colour of sections
+\subsectionfont{\color{MyBlue}}  % sets colour of sections
+\subsubsectionfont{\color{MyBlue}}  % sets colour of sections
+\paragraphfont{\color{MyBlue}}  % sets colour of sections
 %\bibliographystyle{abbrvnat}
 \bibliographystyle{chicago}
 \setcitestyle{authoryear,open={},close={}}
