@@ -1462,4 +1462,102 @@ Note: A split occurs when it increases node purity.
 
 \subsubsection{Trees Versus Linear Models}
 
+Which model is better: Trees or Linear Models?
+
+\textbf{Linear Model:} If the relationship between the features and the response is well approximated by a linear model will out perform trees.
+
+\textbf{Trees:} If highly non-linear relationships between variables then decision trees may outperform classical appraoches. 
+
+Note: estimating the test error through cross-validation methods can determine which approach is best.
+
+\subsubsection{Advantages and Disadvantages of Tress}
+
+\begin{itemize}
+\item (Good) Trees are very easy to explain to people (easier than linear regression)
+\item (Good) Mirror human decision making than regressions
+\item (Good) Displayed graphically, so interpretation is easier
+\item (Good) Handle qualitative predictors without needing to create dummy variables
+\item (Bad) Do not have same level of predictive accuracy as some of the other regression approaches
+\item (Bad) Trees canbe very non-robust; a small change in the data can cause a large change in the final estimated tree.
+\end{itemize}
+
+Note: Bagging, RF, and Boosting methods can improve performance of decision trees.
+
+\subsection{Bagging, Random Forests, Boosting}
+
+\subsubsection{Bagging}
+
+\textit{Bootstrap aggregation, or bagging} is a general purpose procedure for reducing the variance of a statistical learning method, which is useful and frequently used in the context of decision trees.
+
+\textbf{Note:} Averaging a set of observations reduces variance; thus, to increase the prediction accuracy of a model is to take many training sets, build a separate prediction model using each training set, and average thr esulting predictions,
+
+$$
+\hat{f}_{avg}(x) = \frac{1}{B} \sum_{b=1}^B \hat{f}^b(x)
+$$
+
+Bagging involves taking repeated samples from a single training data set, $B$, then train method on $b$th boostrapped training set, and average all predictions,
+
+$$
+\hat{f}_{bag}(x) = \frac{1}{B} \sum_{b=1}^B \hat{f}^{*b}(x)
+$$
+
+To apply bagging to regression trees, simply construct B regression tress using B bootstrapped training sets and average the resulting predictions. Trees are grown deep and not pruned, so individual tree has high variance, but low bias.
+
+For classification problems, a majority vote is taken to predict group.
+
+Note: The number of trees $B$ is not a critical parameter with bagging; using a very large value of B will not lead to overfitting. In practice we use a value of B sufficiently large that the error has settled down. Using $B = 100$ is sufficient to achieve good performance in this example.
+
+\paragraph{Out-of-Bag Error Estimation}
+
+Two thirds of the observations are used in each bagged tree, so the remaining one-third is referred to as the out-of-bag (OOB) observations -- this is used as a valid estimate of the test error for the bagged model. A benefit to using OOB is that it is convenient when performing bagging on large data sets for which cross-validation would be computationally onerous.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/bagging_fig1}
+\end{center}
+
+\paragraph{Variable Importance Measures}
+
+when we bag a large number of trees, it is no longer possible to represent the resulting statistical learning procedure using a single tree, and it is no longer clear which variables are most important to the procedure. Thus, bagging improves prediction accuracy at the expense of interpretability.
+
+Variable important is calculated as the mean decrease in Gini index for each variable, relative to the largest.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/var_import}
+\end{center}
+
+\subsubsection{Random Forests}
+
+Random forests provide an improvement over bagged trees by way of a small tweak that decorrelates the trees. When building these decision trees, each time a split in a tree is considered, a random sample of $m$ predictors is chosen as split candidates from the full set of $p$ predictors. The split is allowed to use only one of those m predictors.
+
+Note: A fresh sample of $m$ predictors is taken at each split, and typically we choose $m \approx \sqrt{p}$ - that is, the number of predictors considered at each split is approximately equal to the square root of the total number of predictors.
+
+When splitting, the algorithm is not even allowed to consider a majority of the available predictors. This feature overcomes limitations in bagging where bagged trees are highly correlated, thus leading to large correlated predictions. RF only consider a subset of predcitors, which decorrelates the trees thereby making the average of the result trees less variable and hence more reliable.
+
+The main difference between bagging and RF is the choice of the predcitor subset size $m$. If $m=p$, or subset of predictors equals total predictors then this is simply bagging. However, if $m=\sqrt{p}$ then a random forest is inititied which leads to a reduction in both test error and OOB error over bagging.
+
+A small nmber of $m$ is typically used for building a RF when a large number of correlated predictors exist.
+
+\subsubsection{Boosting}
+
+Boosting works similarly to bagging, but the trees are grown sequentially: each tree is grown using information from previously grown trees. Boosting does not involve bootstrap sampling; instead each tree is fit on a modified version of the original data set.
+
+The main idea behind boosting is that the approach learns slowly. We fit a tree using the current residuals rather than the outcome variable. The new decision tree is then used in the fitted function to update the residuals. The trees can be rather small with a few nodes, which is determined by the parameter $d$ in the algorithm.
+
+Sitting small trees to the residuals slowly improves $\hat{f}$ where the shrinkage parameter $\lambda$ slows the process down even further.
+
+Note: learning approaches that learn slowly tend to perform well.
+
+Tuning parameters for boosting:
+
+\begin{itemize}
+\item $B$: number of trees. Cross-validation selects B because boosting can overfit if $B$ is too large
+\item $\lambda$: learning rate, typically between 0.01 or 0.001. A small $\lambda$ can require a very large value of $B$
+\item $d$: number of splits in each tree, which controls the complexity. 
+\end{itemize}
+
+Note: Difference between RF and boosting is that boosting generally requires small trees, or even a single predictor, whereas RF use a subset of predictors.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/boosting_alg}
+\end{center}
 
