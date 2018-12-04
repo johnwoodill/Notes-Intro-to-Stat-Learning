@@ -1561,3 +1561,78 @@ Note: Difference between RF and boosting is that boosting generally requires sma
 \includegraphics[width = 5in]{figures/boosting_alg}
 \end{center}
 
+\section{Support Vector Machines}
+
+The support vector machine is a generalization of a simple and intu- itive classifier called the maximal margin classifier; however, the classifier cannot be applied to most data sets because it requires that the classes be separable by a linear boundary.
+
+\subsection{Maximal Margin Classifier}
+
+\subsubsection{What is a Hyperplace?}
+
+In a p-dimensional space, a hyperplace is a flat affine subspace of dimension p-1, defined as,
+
+$$
+\beta_0 + \beta_1 X_1 + ... + \beta_p X_p = 0
+$$
+
+However, if the hyperplane is not satisfied ($> 0 or < 0$) then $X$ lies to one side of the hyperplane. Therefore, a hyperplane divides p-dimensional space into two halves. To calculate the side of the hyperplane, simply solve for the equation above.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/hyperplane_fig1}
+\end{center}
+
+\subsubsection{Classification Using a Separating Hyperplane}
+
+Suppose that it is possible to construct a hyperplane that separates the training observations perfectly according to their class labels.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/hyperplane_fig2}
+\end{center}
+
+If we label one set of observations that are red = 1 and the blue = -1, then we can utilize the equations above as,
+
+$$
+\beta_0 + \beta_1 X_1 + ... + \beta_p X_p > 0 \text{if} y_i = 1
+$$
+
+\noindent and
+
+$$
+\beta_0 + \beta_1 X_1 + ... + \beta_p X_p > 0 \text{if} y_i = -1
+$$
+
+or, more closely, a separating hyperplane has the property,
+
+$$
+y_i(\beta_0 + \beta_1 X_1 + ... + \beta_p X_p) > 0 
+$$
+
+We can also quantify the magnitude based on how far the results are from the hyperplane; that is, how far away from zero (pos or neg). 
+
+\noindent \textbf{Note:} Hyperplane leads to a linear decision boundary. 
+
+\subsubsection{The Maximal Margin Classifier}
+
+In general, if our data can be perfectly separated using a hyperplane, then there will in fact exist an infinite number of such hyperplanes. This is because a given separating hyperplane can usually be shifted a tiny bit up or down, or rotated, without coming into contact with any of the observations.
+
+The \textit{maximal margin hyperplane} (also known as the optimal separating hyperplane) separates the hyperplane that is farthest from the training observations. The goal is to compute the (perpendicular) distance from each training obsevation to a given separating hyperplane. The smallest distance is the minlam distance from the observtiaons to the hyperplane (margin).
+
+\textbf{Note:} The maximal margin hyperplane is the separating hyperplane for which the margin is larger -- that is, it is the hyperplane that has the farhtest minimum distance to the training observations.
+
+It is important that there is a clear separation between training and test set in order to classify correctly.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/hyperplane_fig3}
+\end{center}
+
+Observations that lie on the hyperplane are known as \textit{support vectors} and "support" the maximal margin hyperplane such that if these points shift, so does the maximal margin hyperplane.
+
+\noindent \textbf{Note:} The maximal margin hyperplane depends directly on a small subset of the observations and is an important property in support vector machines.
+
+\subsubsection{Construction of the Maximal Margin Classifier}
+
+
+
+
+
+
