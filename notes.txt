@@ -1631,8 +1631,334 @@ Observations that lie on the hyperplane are known as \textit{support vectors} an
 
 \subsubsection{Construction of the Maximal Margin Classifier}
 
+The maximal margin hyperplane is the solution that optimizes the following problem,
+
+$$
+\text{maximize}_{\beta_0, \beta_1, ..., \beta_p, M} M \hspace{10mm} 
+$$
+
+$$
+s.t. \sum_{j=1}^p \beta_j^2 = 1 \text{and} y_i(\beta_0 + \beta_1 x_{i1} + ... + \beta_p x_{ip}) \geq M \forall i=1, .., n
+$$
+
+The problem is fairly simple to solve:
+
+\begin{itemize}
+\item The constraints ensure each observation is on the correct side of the hyperplane and at least a distance $M$ from the hyperplane.
+\item $M$ represents the margin of our hyperplane and the opitimization problem choose $\beta_0, ..., \beta_p$ to maximize $M$.
+\end{itemize}
+
+\subsubsection{The Non-separable Case}
+
+If no separating hyperplane exists there is no maximal margin classifier. Instead, we can estimate a hyperplane that almost separates the class, known as a soft margin.
+
+\subsection{Support Vector Classifiers}
+
+\subsubsection{Overview of the Support Vector Classifier}
+
+A classifier based on a separating hyperplane will necessarily perfectly classify all of the training observations; this can lead to sensitivity to individual observations. However, adding additional observations that are not classified correctly results in a tiny margin. This creates a problem because the distance of an observation from the hyperplane can be seen as a measure of our confidence that the obs. is classified correctly. This can also result in overfitting.
+
+It might be worthwhile to misclassify a few training obserbations in order to do a better job in classifying the remaining observations. A support vector (soft margin classifier) does exactly this.
+
+\textbf{Support Vector Classifier Intution:} Rather than seeking the largest possible margin so that every observation is not only on the correct side of the hyperplane but also on the correct side of the margin, we instead allow some observations to be on the incorrect side of the margin, or even the incorrect side of the hyperplane.
+
+\subsubsection{Details of the Support Vector Classifier}
+
+The support vector classifier classifies a test observation depending on which side of a hyperplane it lies. The optimization problem is,
+
+$$
+maximize_{\beta_0, ..., \beta_p, \epsilon_1, ...., \epsilon_n, M} M
+$$
+
+$$
+s.t. \sum_{j=1}^p \beta_j^2 = 1
+$$
+
+$$
+y_i(\beta_0 + \beta_1 x_{i1} + ... + \beta_p x_{ip}) \geq M (1 - \epsilon_i)
+$$
+
+$$
+\epsilon_i \geq 0, \sum_{i=1}^n \epsilon_i \leq C
+$$
+
+\noindent where $C$ is a nonnegative tuning parameter and $M$ is the width of the margin where we seek to increase the margin as large as possible. $\epsilon$ are slack variables that allow individual observations to be on th wrong side of the margin.
+
+$\epsilon$ tells us where the $i_{th}$ observation is located relative to the hyperplane and margin. 
+
+\begin{itemize}
+\item $\epsilon = 0$, then the $i_{th}$ observation is on the correct side of the margin.
+\item $\epsilon > 0$ then it is on the wrong side and is said to violated the margin.
+\item $\epsilon > 1$ then it is on the wrong side of the hyperplane
+\end{itemize}
+
+$C$ bounds the sum of the $\epsilon$s and determines the number and severity of the violations to the margin and can be thought of as a budget for the amount that the margin can be violated to the margin. 
+
+\begin{itemize}
+\item $C = 0$, then there is no budget or tolerance within the margin
+\item $C > 0$ no more than $C$ obs. can be on the wrong side of the hyperplane
+\item As $C$ increases become more tolerant of the violations (margin increases) and as $C$ decreases becomes less tolerant (margin shrinks).
+\end{itemize}
+
+$C$ is generally tuned via cross-validation. 
+
+$C$ controls the bias-variance trade-off: (1) Small $C$ narrows the margin and highly fits the data with lower bias but higher variance (2) large $C$ is wider and all more violations classifier leads to more bias but lower variance.
+
+Note: Changing observations on either side will not affect the model, but obs. directly on the margin (support vectors) will affect the model.
+
+Note: The fact that the support vector classifier’s decision rule is based only on a potentially small subset of the training observations (the support vec- tors) means that it is quite robust to the behavior of observations that are far away from the hyperplane.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/svm_fig1}
+\end{center}
+
+\subsection{Support Vector Machines}
+
+The support vector classifier is a natural approach for classification in the two-class setting, if the boundary between the two classes is linear. How- ever, in practice we are sometimes faced with non-linear class boundaries.
+
+\subsubsection{Classification with Non-linear Decision Boundaries}
+
+we could address the prob- lem of possibly non-linear boundaries between classes in a similar way, by enlarging the feature space using quadratic, cubic, and even higher-order polynomial functions of the predictors,
+
+$$
+X_1, X_2, ..., X_p
+$$
+
+\noindent and could instead fit a support vector classifier using $2p$ features,
+
+$$
+X_1, X_1^2, X_2, X_2^2, ..., X_p, X_p^2
+$$
+
+\noindent which can be used to solve the optimization routine. However, increasing the feature space increases the complexity and computation. Support Vector Machines allow for increasing the feature space that leads to efficient computations.
+
+\subsubsection{The Support Vector Machine}
+
+The support vector machine (SVM) is an extension of the support vector classifier that results from enlarging the feature space in a specific way, using kernels. 
+
+To compute the support vector involes only the inner products of the observations, 
+
+$$
+<x_i, x_{i'} = \sum_{j=1}^p x_{ij} x_{i'j}
+$$
+
+The linear support vector classifier can be represented as,
+
+$$
+f(x) = \beta_0 + \sum_{i=1}^n \alpha_i < x, x_i>
+$$
+
+in order to evaluate the function f(x), we need to compute the inner product between the new point x and each of the training points xi. However, it turns out that $\alpha_i$ is nonzero only for the support vectors in the solution—that is, if a training observation is not a support vector, then its $\alpha_i$ equals zero. So if $S$ is the collection of indices of these support points, we can rewrite any solution function of the form ,
+
+$$
+f(x) = \beta_0 + \sum_{ii \in S} \alpha_i < x, x_i>
+$$
+
+We can generalize the inner product using a (linear) kernal,
+
+$$
+K(x_i, x_{i'}) = \sum_{j=1}^p x_{ij} x_{i'j}
+$$
+
+\noindent which gives us back the support vector classifier.
+
+The nonlinear (polynomial kernel) form can be estimated as,
+
+$$
+K(x_i, x_{i'}) = (1 + \sum_{j=1}^p x_{ij} x_{i'j})^d
+$$
+
+When the support vector classifier is combined with a non-linear kernel, the resulting classifier is known as a support vector machine,
+
+$$
+f(x) = \beta_0 + \sum_{ii \in S} \alpha_i K(x, x_i)
+$$
+
+A radial kernal is also another popular choice,
+
+$$
+K(x_i, x_{i'}) = exp(-\gamma \sum_{j=1}^p (x_{ij} - x_{i'j})^2)
+$$
 
 
+\begin{center}
+\includegraphics[width = 5in]{figures/svm_fig2}
+\end{center}
+
+Advantage to using a kernel rather than an enlarging feature space: (1) computationally faster by only computing the kernel instead of the space, which helps with large feature spaces.
+
+\subsection{SVMs with More than Two Classes}
+
+It turns out that the concept of separating hyperplanes upon which SVMs are based does not lend itself naturally to more than two classes. However, two approaches have been proposed to extend SVMs (1) one-versus-one and (2) one-versus-all
+
+\subsubsection{One-Versus-One Classification}
+
+A one-versus-one or all pairs approach constructs SVM's as a pair of classes. The test observation is classfied to each pair of SVMs and the most frequent classification is assigned.
+
+\subsubsection{One-Versus-All Classification}
+
+One-Versus-All fit $K$ SVM's, each time comparing one of the K classes to the remaining K-1 classes. We assign the obsevation to the class where ($\beta_{0k} + \beta_{1k} x_1^* + ... + \beta_{pk} x_p^*$) is the largest.
+
+\subsection{Relationship to Logistic Regression}
+
+There are similarities between SVM and other classical methods. It turns out the criterion can be written as,
+
+$$
+minimize_{\beta_0, \beta_1, ..., \beta_p} \{\sum_{i=1}^n \max [0, 1 - y_i f(x_i)] + \lambda \sum_{j=1}^p \beta_j^2 \}
+$$
+
+\noindent where $\lambda$ is a nonnegative tuning parameter. When $\lambda$ is large, $\beta_1, ..., \beta_p$ are small with more violations to the margin. When $\lambda$ is small, few violations occur thus high-variance, but low bias.
+
+Note that $\lambda \sum_{j=1}^p \beta_j^2$ is the ridge penalty term. The loss and penalty functions between logistic and SVm are very similar.
+
+When the classes are well separated, SVMs tend to behave better than logistic regression; in more overlapping regimes, logistic regression is often preferred.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/svm_fig3}
+\end{center}
+
+We can just as well perform logistic regression or other classifications using a non-linear kernal; however, the use of nonlinear kernels in SVM's is more widespread.
+
+\textbf{Support Vector Regression}: Extended SVM to quantitative rather than classification.
+
+Support vector regression instead seeks coefficients that minimize a different type of loss, where only residuals larger in absolute value than some positive constant contribute to the loss function.
+
+\section{Unsupervised Learning}
+
+In unsupervised learning, the goal is to discover interesting things about the measurements on $X_1, X_2, . . . , X_p$. Is there an informative way to visualize the data? Can we discover subgroups among the variables or among the observations?
+
+\subsection{The Challenge of Unsupervised Learning}
+
+Unsupervised learning is often performed as part of an exploratory data analysis. However, in unsupervised learning, there is no way to check our work because we don’t know the true answer—the problem is unsupervised.
+
+\subsection{Principal Components Analysis}
+
+When faced with a large set of corre- lated variables, principal components allow us to summarize this set with a smaller number of representative variables that collectively explain most of the variability in the original set. These directions also define lines and subspaces that are as close as possible to the data cloud.
+
+Apart from producing derived variables for use in supervised learning problems, PCA also serves as a tool for data visualization (visualization of the observations or visualization of the variables).
+
+\subsubsection{What Are Principal Components?}
+
+We can start EDA by looking at scatterplots, but with many variables the number of scatter plots produced becomes large. A better method is to visualize $n$ observations when $p$ is large. In particular, we would like to find a low-dimensional representation of the data that captures as much of the information as possible. For instance, if we can obtain a two-dimensional representation of the data that captures most of the information, then we can plot the observations in this low-dimensional space.
+
+PCA finds a low-dimensional representation of a data set that contains as much as possible of the variation. It seeks a small number of dimensions that are as interesting as possible, where the concept of interesting is measured by the amount that the observations vary along each dimension. The dimensions are a linear combination of $p$ features.
+
+The first principal component is the normalized linear combination of the features,
+
+$$
+Z_1 = \phi_{11} X_1 + \phi_{21} X_2 + ... + \phi_{p1} X_p
+$$
+
+\noindent that has the largest variance. $\phi$ are the loadings where together they make up the principal component loading vector $\phi_1 = (\phi_{11} \phi_{21} ... \phi_{p1}$. The loadings are constrained so their sum of squares is equal to one.
+
+The first principal component loading vector solves the optimization problem,
+
+$$
+maximize_{\phi_{11}, ..., \phi_{p1}} \{ \frac{1}{n} \sum_{i=1}^n (\sum_{j=1}^p \phi_{j1} x_{ij})^2 \} s.t. \sum_{j=1}^p \phi_{j1}^2 = 1
+$$
+
+The objective is to maximize the sample variance of the $n$ values of $z_{i1}$. $z_{11}, ..., z_{n1}$ are the scores of the first principal compoennt. 
+
+The loading vectors $\phi$ define a direction in the feature space along which the data vary the most.
+
+To calculate the second principal components $Z_2$ it is the linear combinations of $X_1, ..., X_p$ that has miximal variance out of all linear combinations that are uncorrelated with $Z_1$. The second principal component is uncorrelated with the first PC.
+
+Once the PC are calculated, they can be plotted against each other to produce low-dimensional views of the data using a biplot.
+
+In the plot below, the PC scores and loading vectors are displayed in a single plot. Equal weight for Rape, Assault, and Murder are displayed for the first PC; thus, this component corresponds to a measure of overall rates of serious crimes. The second PC places more weight on UrbanPop; thus, this component roughly corresponds to level of urbanization of the state. Further, Murder, Assault, and Rape are located class to one another, thus correalted. UrbanPop is less correlated with the other three. Additionally, states with large positive scores on the first PC, such as California, Nevada, and Florida, have high crime rates while North Dakota how low crime rates. California has a high score on the second PC which indicates a high level of urbanization while the opposite is true for Mississippi. States close to zero on both components, such as Indiana, have approx. average levels of both crime and urbanization.
+
+Take-aways from biplot:
+
+\begin{itemize}
+\item Distinguishes which variables correspond most to each PC.
+\item Correlation between variables; those closests and in direction are most correlated
+\item Groups (states) that relate to rates of variables.
+\end{itemize}
+
+\begin{center}
+\includegraphics[width = 5in]{figures/biplot}
+\end{center}
+
+\subsubsection{Another Interpretation of Principal Components}
+
+An alternative interpretation for principal components can also be useful: principal components provide low-dimensional linear surfaces that are closest to the observations.
+
+\noindent \textbf{Note: }The first principal component loading vector has a very special property: it is the line in p-dimensional space that is closest to the n observations (using average squared Euclidean distance as a measure of closeness).
+
+The appeal of this interpretation is clear: we seek a single dimension of the data that lies as close as possible to all of the data points, since such a line will likely provide a good summary of the data.
+
+Together the first M principal component score vectors and the first M principal component loading vectors provide the best M-dimensional approximation (in terms of Euclidean distance) to the ith observation $x_{ij}$.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/pca_1}
+\end{center}
+
+\subsubsection{More on PCA}
+
+\paragraph{Scaling the Variables}
+
+We have already mentioned that before PCA is performed, the variables should be centered to have mean zero. Furthermore, the results obtained when we perform PCA will also depend on whether the variables have been individually scaled (each multiplied by a different constant). Because it is undesirable for the principal components obtained to depend on an arbitrary choice of scaling, we typically scale each variable to have standard deviation one before we perform PCA.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/pca_2}
+\end{center}
+
+In certain settings, however, the variables may be measured in the same units. In this case, we might not wish to scale the variables to have stan- dard deviation one before performing PCA. For instance, suppose that the variables in a given data set correspond to expression levels for p genes. Then since expression is measured in the same “units” for each gene, we might choose not to scale the genes to each have standard deviation one.
+
+\paragraph{Uniqueness of the Principal Components}
+
+Each principal component loading vector is unique, up to a sign flip. Similarly, the score vectors are unique up to a sign flip, since the variance of $Z$ is the same as the variance of $-Z$.
+
+\paragraph{The Proportion of Variance Explained}
+
+How much of the variance in the data is not contained in the first few principal components? More generally, we are interested in knowing the proportion of variance explained (PVE) by each principal component. 
+
+\begin{center}
+\includegraphics[width = 5in]{figures/pca_3}
+\end{center}
+
+\paragraph{Deciding How Many Principal Components to Use}
+
+We would like to use just the first few principal components in order to visualize or interpret the data. In fact, we would like to use the smallest number of principal components required to get a good understanding of the data. We typically decide on the number of principal components required to visualize the data by examining a scree plot,
+
+The number of PC to use is determined by looking for a point at which the proportion of variance explained by each subsequent principal component drops off.  This is known as an elbow.
+
+if we compute principal components for use in a supervised analysis, such as the principal components regression presented in Section 6.3.1, then there is a simple and objective way to determine how many principal components to use: we can treat the number of principal component score vectors to be used in the regression as a tuning parameter to be selected via cross-validation or a related approach.
+
+\subsubsection{Other Uses for Principal Components}
+
+Many statistical techniques, such as regression, classification, and clustering, can be easily adapted to use the $n × M$ matrix whose columns are the first $M << p$ principal component score vectors, rather than using the full $n × p$ data matrix. This can lead to less noisy results, since it is often the case that the signal (as opposed to the noise) in a data set is concentrated in its first few principal components.
+
+\subsection{Clustering Methods}
+
+Clustering refers to a very broad set of techniques for finding subgroups, or clusters, in a data set. When we cluster the observations of a data set, we seek to partition them into distinct groups so that the observations within each group are quite similar to each other, while observations in different groups are quite different from each other.
+
+Differences between PCA and Clustering:
+
+\begin{itemize}
+\item PCA looks to find a low-dimensional representation of the observations that explain a good fraction of the variance.
+\item Clustering looks to find homogenous subgroups among the observations.
+\end{itemize}
+
+K-means clustering, we seek to partition the observations into a pre-specified number of clusters. On the other hand, in hierarchical clustering, we do not know in advance how many clusters we want; in fact, we end up with a tree-like visual representation of the observations, called a dendrogram.
+
+In general, we can cluster observations on the basis of the features in order to identify subgroups among the observations, or we can cluster fea- tures on the basis of the observations in order to discover subgroups among the features.
+
+\subsubsection{K-Means Clustering}
+
+K-means clustering is a simple and elegant approach for partitioning a data set into K distinct, non-overlapping clusters.  The idea behind K-means clustering is that a good clustering is one for which the within-cluster variation is as small as possible. The goal of K-means clustering is to minimum the clusters such that the total within-cluster variation, summed over all $K$ clusters, is as small as possible,
+
+$$
+minimize_{C_1, ..., C_K} \{\sum_{k=1}^K W(C_K) \}
+$$
+
+\begin{center}
+\includegraphics[width = 5in]{figures/kmeans_fig1}
+\end{center}
+
+\begin{center}
+\includegraphics[width = 5in]{figures/kmeans_fig2}
+\end{center}
 
 
 
