@@ -1944,12 +1944,26 @@ K-means clustering, we seek to partition the observations into a pre-specified n
 
 In general, we can cluster observations on the basis of the features in order to identify subgroups among the observations, or we can cluster fea- tures on the basis of the observations in order to discover subgroups among the features.
 
-\subsubsection{K-Means Clustering}
+\subsubsection{K Means Clustering}
 
 K-means clustering is a simple and elegant approach for partitioning a data set into K distinct, non-overlapping clusters.  The idea behind K-means clustering is that a good clustering is one for which the within-cluster variation is as small as possible. The goal of K-means clustering is to minimum the clusters such that the total within-cluster variation, summed over all $K$ clusters, is as small as possible,
 
 $$
 minimize_{C_1, ..., C_K} \{\sum_{k=1}^K W(C_K) \}
+$$
+
+In words, this formula says that we want to partition the observations into K clusters such that the total within-cluster variation, summed over all K clusters, is as small as possible. To solve, we need to define the within-cluster variation. This can be accomplished with squared Euclidean distance, 
+
+$$
+W(C_k) = \frac{1}{|C_k|} \sum_{i, i' \in C_k} \sum_{j=1}^p (x_{ij} - x_{i'j})^2
+$$
+
+\noindent where $|C_k|$ denotes the number of obs in the kth cluster. In other words, the within-cluster variation for the kth cluster is the sum of all of the pairwise squared Euclidean distances between the observations in the kth cluster, divided by the total number of observations in the kth cluster.
+
+The optimization problem is then defined as,
+
+$$
+minimize_{C_1, ..., C_K} \{\sum_{k=1}^K \frac{1}{|C_k|} \sum_{i, i' \in C_k} \sum_{j=1}^p (x_{ij} - x_{i'j})^2  \}
 $$
 
 \begin{center}
@@ -1959,6 +1973,39 @@ $$
 \begin{center}
 \includegraphics[width = 5in]{figures/kmeans_fig2}
 \end{center}
+
+Because the K-means algorithm finds a local rather than a global opti- mum, the results obtained will depend on the initial (random) cluster as- signment of each observation. For this reason, it is important to run the algorithm multiple times from different random and choose one for which the optimization problem is the smallest.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/kmeans_fig3}
+\end{center}
+
+\subsubsection{Hierarchical Clustering}
+
+One potential disadvantage of K-means clustering is that it requires us to pre-specify the number of clusters K. Hierarchical clustering is an alter- native approach which does not require that we commit to a particular choice of K. Hierarchical clustering has an added advantage over K-means clustering in that it results in an attractive tree-based representation of the observations, called a dendrogram.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/hclustering_fig1}
+\end{center}
+
+The main difference between Hierarchical Clustering and K-Means Clustering is the former utilizes a dendrogram that is built starting from the leaves and combining clusters up to the trunk.
+
+\paragraph{Interpreting a Dendrogram}
+
+Suppose the data are observed without class labels. In a dendrogram, each leaf represents a single observation. Branches are leaves that have fused because the observations are similar to each other. 
+
+\textbf{Note:} We look for points in the tree where branches contain those two observations are first fused. The height represents how different the two observations are. Thus, observations that fuse at the very bottom of the tree are quite similar to each other, whereas observations that fuse close to the top of the tree will tend to be quite different.  
+
+\textbf{Interpreting Dendrogram:} we cannot draw conclusions about the similarity of two observations based on their proximity along the horizontal axis. Rather, we draw conclusions about the similarity of two observations based on the location on the vertical axis where branches containing those two observations first are fused.
+
+The term hierarchical refers to the fact that clusters obtained by cutting the dendrogram at a given height are necessarily nested within the clusters obtained by cutting the dendrogram at any greater height. However, on an arbitrary data set, this assumption of hierarchical structure might be unrealistic.
+
+A very attractive aspect of hierarchical clustering: one single dendrogram can be used to obtain any number of clusters. 
+
+A problem arises when using heirarchical clustering when the split is greater than the realistic split, such as dividing men and women into three groups. Therefore, in this situation, hierarchical clustering can sometimes yield worse results than K-means clustering.
+
+\paragraph{The Hierarchical Clustering Algorithm}
+
 
 
 
