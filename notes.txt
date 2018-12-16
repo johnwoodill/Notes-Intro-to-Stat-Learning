@@ -96,7 +96,7 @@ Restrictive models, such as linear models, are more interpretable. In contrast, 
 \includegraphics[width = 5in]{figures/tradeoff}
 \end{center}
 
-The choice of modeling strategy comes down to the end goal: prediction or inference. Less flexible models are easy to interpret, thus prefered when the goal is inference. If prediction is prefered, then more flexible models may be prefered -- although, more flexible models are not always prefered for prediction accuracy due to overfitting.
+The choice of modeling strategy comes down to the end goal: prediction or inference. Less flexible models are easy to interpret, thus preferred when the goal is inference. If prediction is preferred, then more flexible models may be preferred -- although, more flexible models are not always preferred for prediction accuracy due to overfitting.
 
 \subsubsection{Supervised Versus Unsupervised Learning}
 
@@ -142,7 +142,7 @@ $$
 MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{f}(x_i))^2
 $$
 
-Calculating training MSE (MSE on training data) doesn't tell us much about out-of-sample performance, which is prefered. Suppose $(x_0, y_0)$ are previously unseen test observations. The test MSE is
+Calculating training MSE (MSE on training data) doesn't tell us much about out-of-sample performance, which is preferred. Suppose $(x_0, y_0)$ are previously unseen test observations. The test MSE is
 
 $$
 Ave (y_0 - \hat{f}(x_0))^2)
@@ -160,7 +160,7 @@ increases, training MSE will decrease, but the test MSE may not.
 \includegraphics[width = 5in]{figures/tradeoff_MSE}
 \end{center}
 
-\noindent \textbf{Note}: Overfitting occurs when a small training MSE but a large test MSE exists. This happens because the training model is find patterns in the data and not establishing the signal.
+\noindent \textbf{Note}: Overfitting occurs when a small training MSE but a large test MSE exists. This happens because the training model is finding patterns in the data and not establishing the signal.
 
 \subsubsection{The Bias-Variance Trade-Off}
 
@@ -187,7 +187,7 @@ In terms of bias, the inverse is true. Restricted methods do not identify the tr
 
 \begin{itemize}
 \item Flexible Methods: Variance increases and bias will decrease MSE
-\item Restricted Methods: Variance decreases and bias will increases MSE
+\item Restricted Methods: Variance decreases and bias will increase MSE
 \end{itemize}
 
 \textbf{Note}: The challenge lies in finding a method for which both the variance and the squared bias are low.
@@ -208,7 +208,7 @@ $$
 
 \paragraph{The Bayes Classifier}
 
-The error rate can be classified by assigning each observation to the most likely class, given its predictor values.The Bayes Classifier is,
+The error rate can be classified by assigning each observation to the most likely class, given its predictor values. The Bayes Classifier is,
 
 $$
 Pr(Y = j | X = x_0)
@@ -326,7 +326,7 @@ $$
 t = \frac{\hat{\beta_1} - 0}{SE(\hat{\beta_1})}
 $$
 
-\noindent \textbf{p-value}: a small p-value indicates that it is is unlikely to observe such a substantial association between the predictor and the response due to chance, in the absence of any real associations. 
+\noindent \textbf{p-value}: a small p-value indicates that it is unlikely to observe such a substantial association between the predictor and the response due to chance, in the absence of any real associations. 
 
 In other words, a small p-value infers that there is an association between the predictor and the response, in which case we reject the null hypothesis.
 
@@ -384,11 +384,11 @@ $\beta_j$ quantifies the association between that variable and the effect on a o
 
 \subsubsection{Estimating the Regression Coefficients}
 
-The parametric estimates are obtained using the same least squares minimization problem as before, although slightly more complicated. The differences is that covariates are adjusted based on correlations and will obtain different results than individual least squares estimates\footnote{A regression of shark attacks and ice cream sales reveals a significant result that shark attacks increase with ice cream sale due to increases in temperatures; however, when temperatures are included in the analysis to adjust for correlations between increases in temperature and ice cream sales, the estimate becomes insignificant. }.
+The parametric estimates are obtained using the same least squares minimization problem as before, although slightly more complicated. The differences are that covariates are adjusted based on correlations and will obtain different results than individual least squares estimates\footnote{A regression of shark attacks and ice cream sales reveals a significant result that shark attacks increase with ice cream sale due to increases in temperatures; however, when temperatures are included in the analysis to adjust for correlations between increases in temperature and ice cream sales, the estimate becomes insignificant. }.
 
 \paragraph{1. Is there a relationship between the response and predictors?} 
 
-In multiple variable linear regressions we need to consider whether there is a relationship between all variables. Thus, the null hypothesis is,
+In multiple variable linear regressions, we need to consider whether there is a relationship between all variables. Thus, the null hypothesis is,
 
 $$
 H_0 = \beta_1 = \beta_2 = ... = \beta_p = 0
@@ -456,7 +456,7 @@ $$
 D(0) = \beta_0 + \epsilon
 $$
 
-It is also possible to code with 1 and -1. In this case, the interpretation of the coefficients change.
+It is also possible to code with 1 and -1. In this case, the interpretation of the coefficient’s changes.
 
 $$
 D(1) = \beta_0 + \beta_1 + \epsilon
@@ -540,7 +540,7 @@ Simple approaches to transform variables include log $X$, $sqrt{X}$, and $X^2$.
 
 An important assumption is that the error terms are uncorrelated. Moreover, standard errors are calculated assuming uncorrelated error terms, thus may underestimate the true standard errors.
 
-Correlation of errors terms may exists in time series data (serial correlation). One way to check for correlation in error terms is to plot residuals versus time series. 
+Correlation of errors terms may exist in time series data (serial correlation). One way to check for correlation in error terms is to plot residuals versus time series. 
 
 \begin{center}
 \includegraphics[width = 5in]{figures/cor_err_ts}
@@ -627,11 +627,11 @@ Small $K$ results in step-function that is most flexible of data while larger va
 
 \subsection{Classification}
 
-Classification problems invole dealing with categorical (qualitative) variables. These problems, generally, predict the probability of each category, so they behave like a regression problem.
+Classification problems involve dealing with categorical (qualitative) variables. These problems, generally, predict the probability of each category, so they behave like a regression problem.
 
 Three most common classification problems: \textbf{logistic regression, linear discriminant analysis, and KNN}.
 
-\noindent \textbf{Why Not Linear Regression?}: No natural way to convert a qualitative response variable with more than two levels into a quantitative response that is rady for linear regression, e.g. can't convert 1, 2, 3 to 1 to 3.
+\noindent \textbf{Why Not Linear Regression?}: No natural way to convert a qualitative response variable with more than two levels into a quantitative response that is ready for linear regression, e.g. can't convert 1, 2, 3 to 1 to 3.
 
 \subsubsection{Logistic Regression}
 
@@ -695,12 +695,12 @@ Multiple-class logistic regressions are available, but discriminant analysis is 
 
 Linear Discriminant Analysis involves modeling the distribution of the predictors $X$ separately in each of the response classes, and then use Bayes theorem to flip those around into estimate for $Pr(Y = k|X=x)$.
 
-Why chooce LDA?
+Why choose LDA?
 
 \begin{itemize}
 \item When classes are well separated in logistic regressions, the results are unstable. LDA does not suffer from this.
 \item If $X$ predictors are approx normal and $n$ is small, LDA are more stable
-\item Popular with two repsonse class
+\item Popular with two response class
 \end{itemize}
 
 \subsubsection{Using Bayes' Theorem for Classification}
@@ -711,13 +711,13 @@ $$
 Pr(Y = k| X = x) = \frac{\pi_k f_k(x)}{\sum_{l=1}^K \pi_l f_l(x)}
 $$
 
-\noindent where $\pi_k$ represents the overall, or prior, probability that a given obseration is associated with the kth category of the response variable $Y$. $f_k(x)$ denotes the density function of $X$ for an observation that comes from the kth class.
+\noindent where $\pi_k$ represents the overall, or prior, probability that a given observation is associated with the kth category of the response variable $Y$. $f_k(x)$ denotes the density function of $X$ for an observation that comes from the kth class.
 
-Generally, estimating $\pi_k$ is easy if we hae a random sample of $Y$s from the population (compute fraction of the training observationsthat belong to the kth class). However, estimating $f_k(x)$ is more challending unless a form of density is assumed. The Bayes' classifier provides the lowest error rate, so if we can estimate $f_k(x)$ then we can get a way to classify Bayes.
+Generally, estimating $\pi_k$ is easy if we have a random sample of $Y$s from the population (compute fraction of the training observations that belong to the kth class). However, estimating $f_k(x)$ is more challenging unless a form of density is assumed. The Bayes' classifier provides the lowest error rate, so if we can estimate $f_k(x)$ then we can get a way to classify Bayes.
 
  \subsubsection{Linear Discriminant Analysis for p=1}
 
- With only one predictor, assuming a normal or Gaussian, it is simlpy to estimate the normal density. 
+ With only one predictor, assuming a normal or Gaussian, it is simply to estimate the normal density. 
 
 \begin{center}
 \includegraphics[width = 5in]{figures/LDA_normal.png}
@@ -739,19 +739,19 @@ $$
 \hat{\pi}_k = n_k / n
 $$
 
-The LDA clasifier is,
+The LDA classifier is,
 
 $$
 \hat{\delta}_k (x) = x \cdot \frac{\hat{\mu}_k}{\hat{\sigma}^2} - \frac{\hat{\mu}_k^2}{2 \hat{\sigma}^2} + log(\hat{\pi}_k)
 $$
 
-\noindent \textbf{Note:} the word linear in LDA comes from the fact the the discriminant function $\hat{\delta}_k (x)$ are linear functions of $x$.
+\noindent \textbf{Note:} the word linear in LDA comes from the fact the discriminant function $\hat{\delta}_k (x)$ are linear functions of $x$.
 
 To reiterate, the LDA classifier results from assuming that the observations within each class come from a normal distribution with a class-specific mean vector and a common variance $\sigma^2$, and plugging estimates for these parameters into the Bayes classifier.
 
 \subsubsection{Linear Discriminant Analysis for p > 1}
 
-In the case of $p > 1$ predictors, the LDA classifier assumes that the observations in the kth class are drawn from a multivariate Gaussian distribution $N(\mu_k, \sum)$, where $\mu_k$ is a class-specific mean vector, and $\sum$ is a covariance matrix that is common to all $K$ classes. The multivariation density function is plugged into LDA.
+In the case of $p > 1$ predictors, the LDA classifier assumes that the observations in the kth class are drawn from a multivariate Gaussian distribution $N(\mu_k, \sum)$, where $\mu_k$ is a class-specific mean vector, and $\sum$ is a covariance matrix that is common to all $K$ classes. The multivariate density function is plugged into LDA.
 
 \noindent \textbf{Problem:} binary classifiers, such as LDA, can make two types of errors: (1) can incorrectly assign an individual who defaults to the no default category, or (2) it can incorrectly assign an individual who does not default to the default category. The solution to this is a confusion matrix,
 
@@ -763,7 +763,7 @@ In the case of $p > 1$ predictors, the LDA classifier assumes that the observati
 
 While the Bayes' Classifier will provide lowest error rate, it doesn't always do a good job predicting because of the threshold for the posterior probability, default 50\%. If concerned about incorrect predictions, it's best to lower the threshold, but lowering too much will cause increases in prediction error. Deciding on the threshold is dependent on domain knowledge.
 
-The ROC cuvrve (receiver operating characteristics) is used to simultaneously display the two types of errors for all thresholds. The performance is based on the area under the curve (AUC) of the ROC. ROC curves are useful for comparing different classifiers.
+The ROC curve (receiver operating characteristics) is used to simultaneously display the two types of errors for all thresholds. The performance is based on the area under the curve (AUC) of the ROC. ROC curves are useful for comparing different classifiers.
 
 \begin{center}
 \includegraphics[width = 5in]{figures/roc_curve.png}
@@ -771,7 +771,7 @@ The ROC cuvrve (receiver operating characteristics) is used to simultaneously di
 
 \subsubsection{Quadratic Discriminant Analysis (QDA)}
 
-Like LDA, the QDA classifier results from assuming that the observations from each class are drawn from a Gaussian distribution, and plugging estimates for the parameters into Bayes’ theorem in order to per- form prediction. However, unlike LDA, QDA assumes that each class has its own covariance matrix. Further, QDA assumes $x$ is quandratic as opposed to linear.
+Like LDA, the QDA classifier results from assuming that the observations from each class are drawn from a Gaussian distribution, and plugging estimates for the parameters into Bayes’ theorem in order to per- form prediction. However, unlike LDA, QDA assumes that each class has its own covariance matrix. Further, QDA assumes $x$ is quadratic as opposed to linear.
 
 Generally, LDA is more flexible with a lower variance, so model performance is improved over QDA. However, with larger training sets, QDA may perform better, so the variance is not of concern.
 
@@ -785,7 +785,7 @@ LDA and logistic regressions are closely connected and differ only in their fitt
 
 LDA assumes normal distributions and common variances, so is an improvement over logistic; however, without those assumptions, logistic regressions will do better.
 
-When the decision barrier is highly non-linear, KNN will perform better because of its non-parametric approach; however, KNN doesn't provide a table of cofficients to compare significance of variables.
+When the decision barrier is highly non-linear, KNN will perform better because of its non-parametric approach; however, KNN doesn't provide a table of coefficients to compare significance of variables.
 
 QDA serves as a compromise between KNN, LDA, and logistic regressions.
 
@@ -805,7 +805,7 @@ Given a data set, the use of a particular statistical learning method is warrant
 
 \subsubsection{The Validation Set Approach}
 
-\textbf{Validation set approach:} involves randomly dividing the available set of oservations into two part, training set and validation set or hold-out set. The MSE from test is used to validate the performance of the model.
+\textbf{Validation set approach:} involves randomly dividing the available set of observations into two part, training set and validation set or hold-out set. The MSE from test is used to validate the performance of the model.
 
 Two drawbacks:
 
@@ -826,8 +826,8 @@ $$
 
 Advantages:
 \begin{itemize}
-\item Less bias than the validation set appraoch
-\item no randomness is selection so LOOCV always yield the same reults.
+\item Less bias than the validation set approach
+\item no randomness is selection so LOOCV always yield the same results.
 \end{itemize}
 
 Disadvantage: can be expensive to implement.
@@ -846,9 +846,9 @@ Advantage of k-fold CV: computationally less expensive than LOOCV.
 
 \subsubsection{Bias-Variance Trade-Off for k-Fold CV}
 
- An important advantage of k-fold CV is that it often gives more accurate estimates of the test error rate than does LOOCV. This has to do with a bias-variance trade-off. From the perspective of bias reduction, it is clear that LOOCV is to be preferred to k-fold CV. However, LOOCV has a higher variance then k-fold CV because LOOCV results are highly correlated with one another because the procedure uses most of the same data set. k-FOld will be less correlated since the overlap is smaller.
+ An important advantage of k-fold CV is that it often gives more accurate estimates of the test error rate than does LOOCV. This has to do with a bias-variance trade-off. From the perspective of bias reduction, it is clear that LOOCV is to be preferred to k-fold CV. However, LOOCV has a higher variance then k-fold CV because LOOCV results are highly correlated with one another because the procedure uses most of the same data set. k-Fold will be less correlated since the overlap is smaller.
 
- Typically, $k=5$ or $k=10$ is preferred because it has been shown empirically to yield test error rate estimates that suffer neigther from high bias or high variance.
+ Typically, $k=5$ or $k=10$ is preferred because it has been shown empirically to yield test error rate estimates that suffer neither from high bias or high variance.
 
  \subsubsection{Cross-Validation on Classification Problems}
 
@@ -865,8 +865,8 @@ Advantage of k-fold CV: computationally less expensive than LOOCV.
  Reasons to use another fitting procedure:
 
 \begin{itemize}
-\item \textbf{Prediction Accuracy:} Relationship between response and prediction is based on assumptions in model. By constraining or shrinkig the estimated coefficients, w can reduce teh variance at the cost of a negligible increase in bias, which can improve prediction accuracy.
-\item \textbf{Model Interpretability:} Variables that are irrelvant lead to unnecessary complexity in the model, so it is best to remove them to improve interpretability.
+\item \textbf{Prediction Accuracy:} Relationship between response and prediction is based on assumptions in model. By constraining or shrinking the estimated coefficients, we can reduce the variance at the cost of a negligible increase in bias, which can improve prediction accuracy.
+\item \textbf{Model Interpretability:} Variables that are irrelevant lead to unnecessary complexity in the model, so it is best to remove them to improve interpretability.
 \end{itemize} 
 
 Three methods for feature/variable selection:
@@ -917,7 +917,7 @@ $$
 
 \noindent where $d$ is number of predictors.
 
-$C_p$ statistic adds a penalty to $2d \hat{\sigma}^2$ to the training RSS in order to adjust for the fact that the training error tends to understimate the error. The penalty increases as number of predictors which adjusts for the corresponding decrease in RSS as predictors are added.
+$C_p$ statistic adds a penalty to $2d \hat{\sigma}^2$ to the training RSS in order to adjust for the fact that the training error tends to underestimate the error. The penalty increases as number of predictors which adjusts for the corresponding decrease in RSS as predictors are added.
 
 AIC criterion is defined as,
 
@@ -938,7 +938,7 @@ $$
 Adjusted R^2 = 1 - \frac{RSS/(n-d-1)}{TSS/(n - 1)}
 $$
 
-The intuution behind the adjusted R2 is that once all of the correct variables have been included in the model, adding additional noice variables will lead to only a very small decrease in RSS. In theory, the model with the largest adjusted R2 will have only correct ariables and no noice variables. (R2 is generally not used over AIC, BIC or $C_p$).
+The intuition behind the adjusted R2 is that once all of the correct variables have been included in the model, adding additional noise variables will lead to only a very small decrease in RSS. In theory, the model with the largest adjusted R2 will have only correct variables and no noise variables. (R2 is generally not used over AIC, BIC or $C_p$).
 \textit{Note: A small value for $C_p, AIC, and BIC$ indicates a model with a low test error. A large value for adjusted R2 indicates a model with a small test error.}
 
 \paragraph{Validation and Cross-validation}
@@ -947,11 +947,11 @@ We can compute the validation set error or the cross-validation error for each m
 
 However, cross-validation is computationally expensive, but is generally preferred.
 
-\noindent \textbf{One-standard error rule:} Calculate the standard error of the estimated test MSE for each model size, then select the msallest model wher ethe test error is within one standard error of the lowest point on the curve. If models are more or less equally good, then we want the simplest model.
+\noindent \textbf{One-standard error rule:} Calculate the standard error of the estimated test MSE for each model size, then select the smallest model where the test error is within one standard error of the lowest point on the curve. If models are more or less equally good, then we want the simplest model.
 
 \subsection{Shrinkage Methods}
 
-Instead of cross-validating models with combinations of preditors, we can estimate a model with all predictors and contrain or regularize the coefficients toward zero.
+Instead of cross-validating models with combinations of predictors, we can estimate a model with all predictors and constrain or regularize the coefficients toward zero.
 
 \subsubsection{Ridge Regression}
 
@@ -961,7 +961,7 @@ $$
 \sum_{i=1}^n (y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij})^2 + \lambda \sum{j=1}^p \beta_j^2 = RSS + \lambda \sum_{j=1}^p \beta_j^2
 $$
 
-\noindent where $\lambda \geq 0$ is the tuning parameter. Ridge regression reduces RSS but incorporates a shrinkage term $\lambda \sum_j \beta_j^2$. The tuning parameteric seres to control the relative impact o these two terms on the regression coefficient estimates. 
+\noindent where $\lambda \geq 0$ is the tuning parameter. Ridge regression reduces RSS but incorporates a shrinkage term $\lambda \sum_j \beta_j^2$. The tuning parametric series to control the relative impact of these two terms on the regression coefficient estimates. 
 
 When $\lambda=0$ the penalty term has no effect, which reduces to OLS.  As $\lambda$ increases to infinity, the impact of the shrinkage penalty grows and the coefficients will approach zero.
 
@@ -981,13 +981,13 @@ One disadvantage of ridge regression is the model will always include all predic
 
 \subsubsection{The Lasso}
 
-THe lasso is an alternative to the ridge regression that allows predictors to equal zero.
+The lasso is an alternative to the ridge regression that allows predictors to equal zero.
 
 $$
 \sum_{i=1}^n (y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij})^2 + \lambda \sum{j=1}^p |\beta_j| = RSS + \lambda \sum_{j=1}^p |\beta_j|
 $$
 
-The main difference between ridge and lasso is that $\beta_j^2$ is replaced with $|\beta_j|$. Similarly, the lasso regressions shrinks coefficients towards zero and can include zero. Lasso produces sparse models or models that involve only a subset of the variables. Selecting $\lambda$ is done in the same way too.
+The main difference between ridge and lasso is that $\beta_j^2$ is replaced with $|\beta_j|$. Similarly, the lasso regressions shrink coefficients towards zero and can include zero. Lasso produces sparse models or models that involve only a subset of the variables. Selecting $\lambda$ is done in the same way too.
 
 \paragraph{Comparing the Lasso and Ridge Regression}
 
@@ -1015,7 +1015,7 @@ If $M= p$ no dimension reduction occurs and same as least squares with original 
 
 \subsubsection{Principal Components Regression}
 
-PCA is a technique for reducing the dimension of $X$. The first component PC1 vary the most, then PC2, ... PCN. Or, in other words \textit{the first principal component vector defines the line that is as close as possible to the data (original observations) and captures most of the information contanined in the data}. 
+PCA is a technique for reducing the dimension of $X$. The first component PC1 vary the most, then PC2, ... PCN. Or, in other words \textit{the first principal component vector defines the line that is as close as possible to the data (original observations) and captures most of the information contained in the data}. 
 
 \begin{center}
 \includegraphics[width = 5in]{figures/pca1}
@@ -1023,7 +1023,7 @@ PCA is a technique for reducing the dimension of $X$. The first component PC1 va
 
 \paragraph{The Principal Components Regression Approach}
 
-PCR involves constructing the first $M$ princpals $Z_1, ... Z_m$ and using components as the predictors in a linear regression model. A small number of principals are selected that explain most of the variability in the data. 
+PCR involves constructing the first $M$ principals $Z_1, ... Z_m$ and using components as the predictors in a linear regression model. A small number of principals are selected that explain most of the variability in the data. 
 
 If assumptions underlying PCR holds, then using principal components instead of original predictors will lead to better results. Further, reducing dimensions can mitigate overfitting.
 
@@ -1047,13 +1047,13 @@ A major drawback of PCA is there is no guarantee that the directions that best e
 
 \subsubsection{Partial Least Squares}
 
-PLS overcomes the limitations of PCA by making use of the response $Y$. PLS attemps to find directions that help explain both the response and the predictors through dimension reduction similar to PCA (supervised learning method).
+PLS overcomes the limitations of PCA by making use of the response $Y$. PLS attempts to find directions that help explain both the response and the predictors through dimension reduction similar to PCA (supervised learning method).
 
 Steps to compute PLS:
 \begin{itemize}
 \item Standardize predictors and response.
 \item Compute first direction $Z_1$ by setting each constant, $\phi_{j1}$, equal to the coefficient from OLS.
-\item PLS places the highest weight on the variables that are most stronly related to the response.
+\item PLS places the highest weight on the variables that are most strongly related to the response.
 \end{itemize}
 
 \begin{center}
@@ -1062,7 +1062,7 @@ Steps to compute PLS:
 
 \noindent \textbf{Note:} PLS does not fit the predictors as closely as PCA, but it does a better job explaining the response.
 
-The second PLS direction is calculated by first adjusting each of the variables for $Z_1$ by regressing each variable on $Z_1$ and obtaining th residuals. The residuals are interpreted as the remaining information that has not been explained by the first PLS direction. $Z_2$ is computed using the \textit{orthoganalized data}. This process is continued through each direction.
+The second PLS direction is calculated by first adjusting each of the variables for $Z_1$ by regressing each variable on $Z_1$ and obtaining the residuals. The residuals are interpreted as the remaining information that has not been explained by the first PLS direction. $Z_2$ is computed using the \textit{orthoganalized data}. This process is continued through each direction.
 
 \noindent \textbf{The number of directions used are chosen through cross-validation.}
 
@@ -1084,7 +1084,7 @@ When performing cross-validation on models, $C_p$, AIC, and BIC approaches are n
 
 \subsubsection{Regression in High Dimensions}
 
-Models for fitting less lexible least squares are useful for performing regression in high-dimensions, such as forward stepwise selection ,ridge, lasso, and PCR. These methods avoid overfitting by using less flexible fitting approaches than least squares.
+Models for fitting less flexible least squares are useful for performing regression in high-dimensions, such as forward stepwise selection ,ridge, lasso, and PCR. These methods avoid overfitting by using less flexible fitting approaches than least squares.
 
 The following figure highlights three important points: 
 
@@ -1094,7 +1094,7 @@ The following figure highlights three important points:
 
 (3) the test error tends to increase as the dimensionality of the problem (i.e. the number of features or predictors) increases, unless the additional features are truly associated with the response.
 
-\noindent \textbf{Curse of Dimensionality}: noisy features increase the dimensionality of the problem, exacerbating the risk of overfitting (noice features may be assigning nonzero coeffcieints due to change).
+\noindent \textbf{Curse of Dimensionality}: noisy features increase the dimensionality of the problem, exacerbating the risk of overfitting (noise features may be assigning nonzero coefficients due to change).
 
 \textbf{Note:} adding additional signal features associated with the response will improve the fitted model, but noisy features will lead to deterioration of the fitted model and increase the test error.
 
@@ -1110,13 +1110,13 @@ It is important to take care when reporting errors and measure of model fit in h
 
 \section{Moving Beyond Linearity}
 
-In this chapter we relax the linearity assumption while still attempting to maintain as much interpretability as possible. We do this by examining very simple extensions of linear models like polyno- mial regression and step functions, as well as more sophisticated approaches such as splines, local regression, and generalized additive models.
+In this chapter we relax the linearity assumption while still attempting to maintain as much interpretability as possible. We do this by examining very simple extensions of linear models like polynomial regression and step functions, as well as more sophisticated approaches such as splines, local regression, and generalized additive models.
 
 \begin{itemize}
 \item Polynomial regression: extends linear model by adding extra predictors, such as $X, X^2, X^3$
 \item Step Function: cut the range of variables into K distinct regions (fitting a piecewise constant function)
 \item Regression Splines: more flexible than polynomials and step functions. Involved dividing the range of $X$ and $K$ distinct regions, fit a polynomial that join smooths the boundaries, or \textit{knots}.
-\item Smoothing Splines: Similar to regression splines, but minimizing a residual sum of squares subject to smoothness penatly.
+\item Smoothing Splines: Similar to regression splines, but minimizing a residual sum of squares subject to smoothness penalty.
 \item Local Regression: similar to splines, but regions are allowed to overlap
 \item Generalized Additive Models (GAM): extend methods above to deal with multiple predictors.
 \end{itemize}
@@ -1133,7 +1133,7 @@ $$
 
 \subsection{Step Function}
 
-We can use step function in order to avoid imposing a global structure such as in a linear model. Here we break the range of $X$ into bins or cut points $c_1, c_2, ..., c_K$, and fit a different constant in each bin from a continuous variable into an \textit{ordered catergorical variable}.
+We can use step function in order to avoid imposing a global structure such as in a linear model. Here we break the range of $X$ into bins or cut points $c_1, c_2, ..., c_K$, and fit a different constant in each bin from a continuous variable into an \textit{ordered categorical variable}.
 
 \begin{center}
 \includegraphics[width = 5in]{figures/step_fn_eq}
@@ -1167,17 +1167,17 @@ Regression splines provide flexible classes of the basis functions.
 
 \subsubsection{Piecewise Polynomials}
 
-Piecewise polynomial regressions involve fitting separate low-degree polynomials over different regions of $X$. A piecewise cubic polynomial with a single know at a point $c$ takes the form, 
+Piecewise polynomial regressions involve fitting separate low-degree polynomials over different regions of $X$. A piecewise cubic polynomial with a single known at a point $c$ takes the form, 
 
 \begin{center}
 \includegraphics[width = 5in]{figures/piecewise_eq}
 \end{center}
 
-Here, we fit two different polynomial functions based on the subset of observations at cut $c$. More knots leads to a more flexible piecewise polynomial. For $K$ knots, we fit $K+1$ different cubic polynomials. 
+Here, we fit two different polynomial functions based on the subset of observations at cut $c$. More knots lead to a more flexible piecewise polynomial. For $K$ knots, we fit $K+1$ different cubic polynomials. 
 
 \noindent Note: when $K=0$, this produces a piecewise linear function.
 
-Note that in the figure below, the top left panel provides a piece wise cubic function that is not smooth across age. The discontinuity can be a problem, so it is best to use a continous piecewise cubic that constrains the polynomial to be continuous; although, notice it is not perfectly continuous.
+Note that in the figure below, the top left panel provides a piece wise cubic function that is not smooth across age. The discontinuity can be a problem, so it is best to use a continuous piecewise cubic that constrains the polynomial to be continuous; although, notice it is not perfectly continuous.
 
 \begin{center}
 \includegraphics[width = 5in]{figures/regression_splines_fig1}
@@ -1219,7 +1219,7 @@ It is common to place knots in uniform quantiles across the variable. The number
 
 \subsubsection{Comparison to Polynomial Regression}
 
-Regression splines often give superior results to polynomial regressions because spline introduce flexibility by increasing the number of knots but keeping the dgree fixed, thus producing more stable estimates. Splines also allow us to place more knots, and hence flexibility, over regions where the function $f$ seems to be changing rapidly, and fewer knots where $f$ appears more stable.
+Regression splines often give superior results to polynomial regressions because spline introduce flexibility by increasing the number of knots but keeping the degree fixed, thus producing more stable estimates. Splines also allow us to place more knots, and hence flexibility, over regions where the function $f$ seems to be changing rapidly, and fewer knots where $f$ appears more stable.
 
 \begin{center}
 \includegraphics[width = 5in]{figures/poly_vs_spline}
@@ -1247,7 +1247,7 @@ $$
 
 Note: The first derivative $g'(t)$ measures the slope of a function at t, and the second derivative corresponds to the amount by which the slope is changing. Hence, broadly speaking, the second derivative of a function is a measure of its roughness: it is large in absolute value if $g(t)$ is very wiggly near $t$, and it is close to zero otherwise.
 
-In other words, $\int g''(t)^2 dt$ is simply a measure of the total change in the function $g'(t)$ over it's entire range. If $g$ is very smooth, then $g'(t)$ will be close to constant and $g''(t)^2$ will take on a small value.  Conversely, if $g$ is jumpy and variable then $g'(t)$ will vary significantly and  $g''(t)^2 dt$ will take on a large value. The larger the value of $\lambda$, the smoother $g$ will be.
+In other words, $\int g''(t)^2 dt$ is simply a measure of the total change in the function $g'(t)$ over its entire range. If $g$ is very smooth, then $g'(t)$ will be close to constant and $g''(t)^2$ will take on a small value.  Conversely, if $g$ is jumpy and variable then $g'(t)$ will vary significantly and  $g''(t)^2 dt$ will take on a large value. The larger the value of $\lambda$, the smoother $g$ will be.
 
 The function $g(x)$ that solves the minimization problem has specific properties,
 
@@ -1267,13 +1267,13 @@ $$
 \hat{\textbf{g}}_{\lambda} = \textbf{S}_{\lambda} \textbf{y}
 $$
 
-\noindent where the vector of fitted values when applying a smoothing spline to the data canbe written as an $n x n$ matrix $\textbf{S}_{\lambda}$ times the response vector $\textbf{y}$. Therefore, the effective degrees of freedom is defined to be the sum of the diagonal elements of the matrix $\textbf{S}_{\lambda}$
+\noindent where the vector of fitted values when applying a smoothing spline to the data can be written as an $n x n$ matrix $\textbf{S}_{\lambda}$ times the response vector $\textbf{y}$. Therefore, the effective degrees of freedom are defined to be the sum of the diagonal elements of the matrix $\textbf{S}_{\lambda}$
 
 $$
 df_{\lambda} = \sum_{i=1}^n \{\textbf{S}_{\lambda}\}_{ii}
 $$
 
-When fitting a smoothing spline, it is not necesssary to choose the number of knots, but instead the value of $\lambda$, which is chosen through cross-validation by making RSS as small as possible. This is done using LOOCV, which is the same cost as computing a single fit, using the following formula,
+When fitting a smoothing spline, it is not necessary to choose the number of knots, but instead the value of $\lambda$, which is chosen through cross-validation by making RSS as small as possible. This is done using LOOCV, which is the same cost as computing a single fit, using the following formula,
 
 $$
 RSS_{cv}(\lambda) = \sum_{i=1}^n (y_i - \hat{g}_{\lambda}^{(-i)}) = \sum_{i=1}^n [\frac{y_i - \hat{g}_{\lambda}(x_i)}{1 - \{\textbf{S}_{\lambda} \}_{ii}}]^2
@@ -1281,7 +1281,7 @@ $$
 
 \noindent where $\hat{g}_{\lambda}^{(-i)}$ represents the fitted value for the smoothing spline evaluated at $x_i$ for all training data except for the $i$th observation. In contrast,  $\hat{g}_{\lambda}(x_i)$ represents the smoothing spline function fit to all of the training observations and evaluated at $x_i$.
 
-\textbf{Note:} The forumla suggests that we can compute each of these LOOCV fits using only $\hat{g}_{\lambda}$, the original fit to all of the data. Notice in the figure below that LOOCV provides a reasonable estimate of the data while reducing effective degrees of freedom.
+\textbf{Note:} The formula suggests that we can compute each of these LOOCV fits using only $\hat{g}_{\lambda}$, the original fit to all of the data. Notice in the figure below that LOOCV provides a reasonable estimate of the data while reducing effective degrees of freedom.
 
 
 \begin{center}
@@ -1290,7 +1290,7 @@ $$
 
 \subsection{Local Regression}
 
-Local regression is a different approach for fitting flexible non-linear func- tions, which involves computing the fit at a target point x0 using only the nearby training observations. To obtain the local regression fit at a new point, we need to fit a new weighted least squares regression model by minimizing for a new set of weights. Local regression is sometimes referred to as a memory-based procedure, because like nearest-neighbors, we need all the training data each time we wish to compute a prediction.
+Local regression is a different approach for fitting flexible non-linear functions, which involves computing the fit at a target point x0 using only the nearby training observations. To obtain the local regression fit at a new point, we need to fit a new weighted least squares regression model by minimizing for a new set of weights. Local regression is sometimes referred to as a memory-based procedure, because like nearest-neighbors, we need all the training data each time we wish to compute a prediction.
 
 \begin{center}
 \includegraphics[width = 5in]{figures/local_reg_fig}
@@ -1304,7 +1304,7 @@ Things to consider:
 \item (Most important) defining span, $s$, that controls the flexibility of the non-linear fit.
 \end{itemize}
 
-\noindent The smaller the value of $s$, the more local and wiggly the fit will bit. Cross-validation is used to determine the optimal value of $s$.
+\noindent The smaller the value of $s$, the more local and wigglier the fit will be. Cross-validation is used to determine the optimal value of $s$.
 
 \begin{center}
 \includegraphics[width = 5in]{figures/local_reg_alg}
@@ -1312,7 +1312,7 @@ Things to consider:
 
 \textit{Varying coefficient model} is a way to adapt a model to the most recently gathered data. 
 
-\noindent \textbf{Local regressions can perform poorly when p-dimensional neightborhoods are small, say 3 or 4, because there will generally be very few training observations close to $x_0$ or the observation being interpolated.}
+\noindent \textbf{Local regressions can perform poorly when p-dimensional neighborhoods are small, say 3 or 4, because there will generally be very few training observations close to $x_0$ or the observation being interpolated.}
 
 \begin{center}
 \includegraphics[width = 5in]{figures/local_reg_span}
@@ -1320,7 +1320,7 @@ Things to consider:
 
 \subsection{Generalized Additive Models (GAM)}
 
-Generalized additive models (GAMs) provide a general framework for extending a standard linear model by allowing non-linear functions of each of the variables, while maintaining additivity. GAMs can be applied to both quantitative and qualitative respones.
+Generalized additive models (GAMs) provide a general framework for extending a standard linear model by allowing non-linear functions of each of the variables, while maintaining additivity. GAMs can be applied to both quantitative and qualitative response.
 
 \subsubsection{GAMs for Regression Problems}
 
@@ -1345,9 +1345,9 @@ Generally, the differences in GAMs using smoothing splines versus natural spline
 Pros and Cons of GAMs:
 
 \begin{itemize}
-\item (Pros) Do not need to manually try out many different transofmrations of each variable because the fit is automatrically modeled in a non-linear framework.
+\item (Pros) Do not need to manually try out many different transformations of each variable because the fit is automatically modeled in a non-linear framework.
 \item (Pros) Can be more accurate 
-\item (Pros) Because the model is additive, we can exame the effects of each covariate on the response by holding all other variables fixed.
+\item (Pros) Because the model is additive, we can examine the effects of each covariate on the response by holding all other variables fixed.
 \item (Pros) smoothness of function can be summarized via degrees of freedoms
 \item (Cons) Model is restricted to be additive, thus with many variables important interactions can be missed; although, we can simply add interactions to the model to account for the missing interactions.
 \end{itemize}
@@ -1373,7 +1373,7 @@ $$
 
 \section{Tree-Based Methods}
 
-Tree-based methods stratify or segment the predictor space into a number of simple regions. In order to make a prediction for a given observation, we typically use the mean or the mode of the training observa- tions in the region to which it belongs. Decision trees are not as accurate as other methods, such as baggin, random forests and boosting which rely on estimating multiple trees and combining to produce predictions.
+Tree-based methods stratify or segment the predictor space into a number of simple regions. In order to make a prediction for a given observation, we typically use the mean or the mode of the training observations in the region to which it belongs. Decision trees are not as accurate as other methods, such as bagging, random forests and boosting which rely on estimating multiple trees and combining to produce predictions.
 
 \subsection{The Basics of Decision Trees}
 
@@ -1394,11 +1394,11 @@ $$
 \sum_{j=1}^J \sum_{i \in R_j} (y_i - \hat{y_{R_j}})^2
 $$
 
-\noindent where $\hat{y_{R_j}}$ is the mean response for the training observations. This is computationally inffeasible to consider eveyr possible partition; therefore, we take a top-down approach know as recursive binary splitting.
+\noindent where $\hat{y_{R_j}}$ is the mean response for the training observations. This is computationally infeasible to consider every possible partition; therefore, we take a top-down approach know as recursive binary splitting.
 
 \textbf{Recursive Binary Splitting:} Starting at the top of the tree, successive splits of the predictor space split via two new branches down the tree. The best split is made at the particular step.
 
-To perform recursive binary splitting, the general outline is to consider all predictors, $X_1, ..., X_p$ and all possible values of the cutpoint $s$ for each of the predictors, and then choose the predictor and cutpoint such that the resulting tree has the lowest RSS. This is designated as,
+To perform recursive binary splitting, the general outline is to consider all predictors, $X_1, ..., X_p$ and all possible values of the cut point $s$ for each of the predictors, and then choose the predictor and cut point such that the resulting tree has the lowest RSS. This is designated as,
 
 $$
 R_1(j,s) = \{X|X_j < \} and R_2 (j, s) = \{X|X_j \geq s \}
@@ -1410,7 +1410,7 @@ $$
 \sum_{i: x_i \in R_1 (j, s)} (y_i - \hat{y_{R_1}})^2 + \sum_{i: x_i \in R_2 (j, s)} (y_i - \hat{y_{R_2}})^2
 $$
 
-Next, repeat the rocess by looking for the best predictor and best cutpoint in order to split the data further so as to minimze the RSS within each of the resulting regions. However, we split one of the two prevoiously identified regions. The process continues until a stopping criterion is reach. Then predict responses.
+Next, repeat the process by looking for the best predictor and best cut point in order to split the data further so as to minimize the RSS within each of the resulting regions. However, we split one of the two previously identified regions. The process continues until a stopping criterion is reach. Then predict responses.
 
 \paragraph{Tree Pruning}
 
@@ -1418,7 +1418,7 @@ Splitting in such a way described above may produce good predictions but not on 
 
 A better strategy is to grow a very large tree and then prune back to obtain a subtree. However, this is computationally expensive, so \textit{cost complexity pruning or weakest link pruning} is one way to do this.
 
-\textbf{Cost complexity pruning or weakest link pruning}: Consider a sequence of trees indexed bya  nonnegative tuning parameter, $\alpha$.
+\textbf{Cost complexity pruning or weakest link pruning}: Consider a sequence of trees indexed by a nonnegative tuning parameter, $\alpha$.
 
 \begin{center}
 \includegraphics[width = 5in]{figures/dt_fig1}
@@ -1438,7 +1438,7 @@ The tuning parameter, $\alpha$, controls a trade-off between the subtree's compl
 
 \subsubsection{Classification Trees}
 
-Classification trees are very similar to regression trees except the response is different. For a classification tree, we predict that each observation belongs to the most commonly occuring class of training observations in the region.
+Classification trees are very similar to regression trees except the response is different. For a classification tree, we predict that each observation belongs to the most commonly occurring class of training observations in the region.
 
 Instead of RSS, classification trees use the error rate to optimize splitting. However, the classification error rate may not be appropriate, so a Gini index can be used instead,
 
@@ -1456,7 +1456,7 @@ $$
 
 A smaller value indicates the $m$th node is pure.
 
-Gini or entropy are used to evalue the quality of a particluar split. The classification error rate is preferable if prediction accuracy of the final pruned tree is the goal.
+Gini or entropy are used to evaluate the quality of a particular split. The classification error rate is preferable if prediction accuracy of the final pruned tree is the goal.
 
 Note: A split occurs when it increases node purity.
 
@@ -1464,9 +1464,9 @@ Note: A split occurs when it increases node purity.
 
 Which model is better: Trees or Linear Models?
 
-\textbf{Linear Model:} If the relationship between the features and the response is well approximated by a linear model will out perform trees.
+\textbf{Linear Model:} If the relationship between the features and the response is well approximated by a linear model will outperform trees.
 
-\textbf{Trees:} If highly non-linear relationships between variables then decision trees may outperform classical appraoches. 
+\textbf{Trees:} If highly non-linear relationships between variables then decision trees may outperform classical approaches. 
 
 Note: estimating the test error through cross-validation methods can determine which approach is best.
 
@@ -1478,7 +1478,7 @@ Note: estimating the test error through cross-validation methods can determine w
 \item (Good) Displayed graphically, so interpretation is easier
 \item (Good) Handle qualitative predictors without needing to create dummy variables
 \item (Bad) Do not have same level of predictive accuracy as some of the other regression approaches
-\item (Bad) Trees canbe very non-robust; a small change in the data can cause a large change in the final estimated tree.
+\item (Bad) Trees can be very non-robust; a small change in the data can cause a large change in the final estimated tree.
 \end{itemize}
 
 Note: Bagging, RF, and Boosting methods can improve performance of decision trees.
@@ -1489,13 +1489,13 @@ Note: Bagging, RF, and Boosting methods can improve performance of decision tree
 
 \textit{Bootstrap aggregation, or bagging} is a general purpose procedure for reducing the variance of a statistical learning method, which is useful and frequently used in the context of decision trees.
 
-\textbf{Note:} Averaging a set of observations reduces variance; thus, to increase the prediction accuracy of a model is to take many training sets, build a separate prediction model using each training set, and average thr esulting predictions,
+\textbf{Note:} Averaging a set of observations reduces variance; thus, to increase the prediction accuracy of a model is to take many training sets, build a separate prediction model using each training set, and average the resulting predictions,
 
 $$
 \hat{f}_{avg}(x) = \frac{1}{B} \sum_{b=1}^B \hat{f}^b(x)
 $$
 
-Bagging involves taking repeated samples from a single training data set, $B$, then train method on $b$th boostrapped training set, and average all predictions,
+Bagging involves taking repeated samples from a single training data set, $B$, then train method on $b$th bootstrapped training set, and average all predictions,
 
 $$
 \hat{f}_{bag}(x) = \frac{1}{B} \sum_{b=1}^B \hat{f}^{*b}(x)
@@ -1531,11 +1531,11 @@ Random forests provide an improvement over bagged trees by way of a small tweak 
 
 Note: A fresh sample of $m$ predictors is taken at each split, and typically we choose $m \approx \sqrt{p}$ - that is, the number of predictors considered at each split is approximately equal to the square root of the total number of predictors.
 
-When splitting, the algorithm is not even allowed to consider a majority of the available predictors. This feature overcomes limitations in bagging where bagged trees are highly correlated, thus leading to large correlated predictions. RF only consider a subset of predcitors, which decorrelates the trees thereby making the average of the result trees less variable and hence more reliable.
+When splitting, the algorithm is not even allowed to consider a majority of the available predictors. This feature overcomes limitations in bagging where bagged trees are highly correlated, thus leading to large correlated predictions. RF only consider a subset of predictors, which decorrelates the trees thereby making the average of the result trees less variable and hence more reliable.
 
-The main difference between bagging and RF is the choice of the predcitor subset size $m$. If $m=p$, or subset of predictors equals total predictors then this is simply bagging. However, if $m=\sqrt{p}$ then a random forest is inititied which leads to a reduction in both test error and OOB error over bagging.
+The main difference between bagging and RF is the choice of the predictor subset size $m$. If $m=p$, or subset of predictors equals total predictors then this is simply bagging. However, if $m=\sqrt{p}$ then a random forest is initiated which leads to a reduction in both test error and OOB error over bagging.
 
-A small nmber of $m$ is typically used for building a RF when a large number of correlated predictors exist.
+A small number of $m$ is typically used for building a RF when a large number of correlated predictors exist.
 
 \subsubsection{Boosting}
 
@@ -1563,13 +1563,13 @@ Note: Difference between RF and boosting is that boosting generally requires sma
 
 \section{Support Vector Machines}
 
-The support vector machine is a generalization of a simple and intu- itive classifier called the maximal margin classifier; however, the classifier cannot be applied to most data sets because it requires that the classes be separable by a linear boundary.
+The support vector machine is a generalization of a simple and intuitive classifier called the maximal margin classifier; however, the classifier cannot be applied to most data sets because it requires that the classes be separable by a linear boundary.
 
 \subsection{Maximal Margin Classifier}
 
-\subsubsection{What is a Hyperplace?}
+\subsubsection{What is a Hyperplane?}
 
-In a p-dimensional space, a hyperplace is a flat affine subspace of dimension p-1, defined as,
+In a p-dimensional space, a hyperplane is a flat affine subspace of dimension p-1, defined as,
 
 $$
 \beta_0 + \beta_1 X_1 + ... + \beta_p X_p = 0
@@ -1615,9 +1615,9 @@ We can also quantify the magnitude based on how far the results are from the hyp
 
 In general, if our data can be perfectly separated using a hyperplane, then there will in fact exist an infinite number of such hyperplanes. This is because a given separating hyperplane can usually be shifted a tiny bit up or down, or rotated, without coming into contact with any of the observations.
 
-The \textit{maximal margin hyperplane} (also known as the optimal separating hyperplane) separates the hyperplane that is farthest from the training observations. The goal is to compute the (perpendicular) distance from each training obsevation to a given separating hyperplane. The smallest distance is the minlam distance from the observtiaons to the hyperplane (margin).
+The \textit{maximal margin hyperplane} (also known as the optimal separating hyperplane) separates the hyperplane that is farthest from the training observations. The goal is to compute the (perpendicular) distance from each training observation to a given separating hyperplane. The smallest distance is the minimal distance from the observations to the hyperplane (margin).
 
-\textbf{Note:} The maximal margin hyperplane is the separating hyperplane for which the margin is larger -- that is, it is the hyperplane that has the farhtest minimum distance to the training observations.
+\textbf{Note:} The maximal margin hyperplane is the separating hyperplane for which the margin is larger -- that is, it is the hyperplane that has the farthest minimum distance to the training observations.
 
 It is important that there is a clear separation between training and test set in order to classify correctly.
 
@@ -1645,7 +1645,7 @@ The problem is fairly simple to solve:
 
 \begin{itemize}
 \item The constraints ensure each observation is on the correct side of the hyperplane and at least a distance $M$ from the hyperplane.
-\item $M$ represents the margin of our hyperplane and the opitimization problem choose $\beta_0, ..., \beta_p$ to maximize $M$.
+\item $M$ represents the margin of our hyperplane and the optimization problem choose $\beta_0, ..., \beta_p$ to maximize $M$.
 \end{itemize}
 
 \subsubsection{The Non-separable Case}
@@ -1658,9 +1658,9 @@ If no separating hyperplane exists there is no maximal margin classifier. Instea
 
 A classifier based on a separating hyperplane will necessarily perfectly classify all of the training observations; this can lead to sensitivity to individual observations. However, adding additional observations that are not classified correctly results in a tiny margin. This creates a problem because the distance of an observation from the hyperplane can be seen as a measure of our confidence that the obs. is classified correctly. This can also result in overfitting.
 
-It might be worthwhile to misclassify a few training obserbations in order to do a better job in classifying the remaining observations. A support vector (soft margin classifier) does exactly this.
+It might be worthwhile to misclassify a few training observations in order to do a better job in classifying the remaining observations. A support vector (soft margin classifier) does exactly this.
 
-\textbf{Support Vector Classifier Intution:} Rather than seeking the largest possible margin so that every observation is not only on the correct side of the hyperplane but also on the correct side of the margin, we instead allow some observations to be on the incorrect side of the margin, or even the incorrect side of the hyperplane.
+\textbf{Support Vector Classifier Intuition:} Rather than seeking the largest possible margin so that every observation is not only on the correct side of the hyperplane but also on the correct side of the margin, we instead allow some observations to be on the incorrect side of the margin, or even the incorrect side of the hyperplane.
 
 \subsubsection{Details of the Support Vector Classifier}
 
@@ -1682,13 +1682,13 @@ $$
 \epsilon_i \geq 0, \sum_{i=1}^n \epsilon_i \leq C
 $$
 
-\noindent where $C$ is a nonnegative tuning parameter and $M$ is the width of the margin where we seek to increase the margin as large as possible. $\epsilon$ are slack variables that allow individual observations to be on th wrong side of the margin.
+\noindent where $C$ is a nonnegative tuning parameter and $M$ is the width of the margin where we seek to increase the margin as large as possible. $\epsilon$ are slack variables that allow individual observations to be on the wrong side of the margin.
 
-$\epsilon$ tells us where the $i_{th}$ observation is located relative to the hyperplane and margin. 
+$\epsilon$ tells us where the $i_{the}$ observation is located relative to the hyperplane and margin. 
 
 \begin{itemize}
-\item $\epsilon = 0$, then the $i_{th}$ observation is on the correct side of the margin.
-\item $\epsilon > 0$ then it is on the wrong side and is said to violated the margin.
+\item $\epsilon = 0$, then the $i_{the}$ observation is on the correct side of the margin.
+\item $\epsilon > 0$ then it is on the wrong side and is said to violate the margin.
 \item $\epsilon > 1$ then it is on the wrong side of the hyperplane
 \end{itemize}
 
@@ -1706,7 +1706,7 @@ $C$ controls the bias-variance trade-off: (1) Small $C$ narrows the margin and h
 
 Note: Changing observations on either side will not affect the model, but obs. directly on the margin (support vectors) will affect the model.
 
-Note: The fact that the support vector classifier’s decision rule is based only on a potentially small subset of the training observations (the support vec- tors) means that it is quite robust to the behavior of observations that are far away from the hyperplane.
+Note: The fact that the support vector classifier’s decision rule is based only on a potentially small subset of the training observations (the support vectors) means that it is quite robust to the behavior of observations that are far away from the hyperplane.
 
 \begin{center}
 \includegraphics[width = 5in]{figures/svm_fig1}
@@ -1718,7 +1718,7 @@ The support vector classifier is a natural approach for classification in the tw
 
 \subsubsection{Classification with Non-linear Decision Boundaries}
 
-we could address the prob- lem of possibly non-linear boundaries between classes in a similar way, by enlarging the feature space using quadratic, cubic, and even higher-order polynomial functions of the predictors,
+we could address the problem of possibly non-linear boundaries between classes in a similar way, by enlarging the feature space using quadratic, cubic, and even higher-order polynomial functions of the predictors,
 
 $$
 X_1, X_2, ..., X_p
@@ -1736,7 +1736,7 @@ $$
 
 The support vector machine (SVM) is an extension of the support vector classifier that results from enlarging the feature space in a specific way, using kernels. 
 
-To compute the support vector involes only the inner products of the observations, 
+To compute the support vector involves only the inner products of the observations, 
 
 $$
 <x_i, x_{i'} = \sum_{j=1}^p x_{ij} x_{i'j}
@@ -1748,13 +1748,13 @@ $$
 f(x) = \beta_0 + \sum_{i=1}^n \alpha_i < x, x_i>
 $$
 
-in order to evaluate the function f(x), we need to compute the inner product between the new point x and each of the training points xi. However, it turns out that $\alpha_i$ is nonzero only for the support vectors in the solution—that is, if a training observation is not a support vector, then its $\alpha_i$ equals zero. So if $S$ is the collection of indices of these support points, we can rewrite any solution function of the form ,
+in order to evaluate the function f(x), we need to compute the inner product between the new point x and each of the training points xi. However, it turns out that $\alpha_i$ is nonzero only for the support vectors in the solution—that is, if a training observation is not a support vector, then its $\alpha_i$ equals zero. So, if $S$ is the collection of indices of these support points, we can rewrite any solution function of the form ,
 
 $$
 f(x) = \beta_0 + \sum_{ii \in S} \alpha_i < x, x_i>
 $$
 
-We can generalize the inner product using a (linear) kernal,
+We can generalize the inner product using a (linear) kernel,
 
 $$
 K(x_i, x_{i'}) = \sum_{j=1}^p x_{ij} x_{i'j}
@@ -1774,7 +1774,7 @@ $$
 f(x) = \beta_0 + \sum_{ii \in S} \alpha_i K(x, x_i)
 $$
 
-A radial kernal is also another popular choice,
+A radial kernel is also another popular choice,
 
 $$
 K(x_i, x_{i'}) = exp(-\gamma \sum_{j=1}^p (x_{ij} - x_{i'j})^2)
@@ -1793,11 +1793,11 @@ It turns out that the concept of separating hyperplanes upon which SVMs are base
 
 \subsubsection{One-Versus-One Classification}
 
-A one-versus-one or all pairs approach constructs SVM's as a pair of classes. The test observation is classfied to each pair of SVMs and the most frequent classification is assigned.
+A one-versus-one or all pairs approach constructs SVM's as a pair of classes. The test observation is classified to each pair of SVMs and the most frequent classification is assigned.
 
 \subsubsection{One-Versus-All Classification}
 
-One-Versus-All fit $K$ SVM's, each time comparing one of the K classes to the remaining K-1 classes. We assign the obsevation to the class where ($\beta_{0k} + \beta_{1k} x_1^* + ... + \beta_{pk} x_p^*$) is the largest.
+One-Versus-All fit $K$ SVM's, each time comparing one of the K classes to the remaining K-1 classes. We assign the observation to the class where ($\beta_{0k} + \beta_{1k} x_1^* + ... + \beta_{pk} x_p^*$) is the largest.
 
 \subsection{Relationship to Logistic Regression}
 
@@ -1809,7 +1809,7 @@ $$
 
 \noindent where $\lambda$ is a nonnegative tuning parameter. When $\lambda$ is large, $\beta_1, ..., \beta_p$ are small with more violations to the margin. When $\lambda$ is small, few violations occur thus high-variance, but low bias.
 
-Note that $\lambda \sum_{j=1}^p \beta_j^2$ is the ridge penalty term. The loss and penalty functions between logistic and SVm are very similar.
+Note that $\lambda \sum_{j=1}^p \beta_j^2$ is the ridge penalty term. The loss and penalty functions between logistic and SVM are very similar.
 
 When the classes are well separated, SVMs tend to behave better than logistic regression; in more overlapping regimes, logistic regression is often preferred.
 
@@ -1817,7 +1817,7 @@ When the classes are well separated, SVMs tend to behave better than logistic re
 \includegraphics[width = 5in]{figures/svm_fig3}
 \end{center}
 
-We can just as well perform logistic regression or other classifications using a non-linear kernal; however, the use of nonlinear kernels in SVM's is more widespread.
+We can just as well perform logistic regression or other classifications using a non-linear kernel; however, the use of nonlinear kernels in SVM's is more widespread.
 
 \textbf{Support Vector Regression}: Extended SVM to quantitative rather than classification.
 
@@ -1833,7 +1833,7 @@ Unsupervised learning is often performed as part of an exploratory data analysis
 
 \subsection{Principal Components Analysis}
 
-When faced with a large set of corre- lated variables, principal components allow us to summarize this set with a smaller number of representative variables that collectively explain most of the variability in the original set. These directions also define lines and subspaces that are as close as possible to the data cloud.
+When faced with a large set of correlated variables, principal components allow us to summarize this set with a smaller number of representative variables that collectively explain most of the variability in the original set. These directions also define lines and subspaces that are as close as possible to the data cloud.
 
 Apart from producing derived variables for use in supervised learning problems, PCA also serves as a tool for data visualization (visualization of the observations or visualization of the variables).
 
@@ -1857,21 +1857,21 @@ $$
 maximize_{\phi_{11}, ..., \phi_{p1}} \{ \frac{1}{n} \sum_{i=1}^n (\sum_{j=1}^p \phi_{j1} x_{ij})^2 \} s.t. \sum_{j=1}^p \phi_{j1}^2 = 1
 $$
 
-The objective is to maximize the sample variance of the $n$ values of $z_{i1}$. $z_{11}, ..., z_{n1}$ are the scores of the first principal compoennt. 
+The objective is to maximize the sample variance of the $n$ values of $z_{i1}$. $z_{11}, ..., z_{n1}$ are the scores of the first principal component. 
 
 The loading vectors $\phi$ define a direction in the feature space along which the data vary the most.
 
-To calculate the second principal components $Z_2$ it is the linear combinations of $X_1, ..., X_p$ that has miximal variance out of all linear combinations that are uncorrelated with $Z_1$. The second principal component is uncorrelated with the first PC.
+To calculate the second principal components $Z_2$ it is the linear combinations of $X_1, ..., X_p$ that has maximal variance out of all linear combinations that are uncorrelated with $Z_1$. The second principal component is uncorrelated with the first PC.
 
 Once the PC are calculated, they can be plotted against each other to produce low-dimensional views of the data using a biplot.
 
-In the plot below, the PC scores and loading vectors are displayed in a single plot. Equal weight for Rape, Assault, and Murder are displayed for the first PC; thus, this component corresponds to a measure of overall rates of serious crimes. The second PC places more weight on UrbanPop; thus, this component roughly corresponds to level of urbanization of the state. Further, Murder, Assault, and Rape are located class to one another, thus correalted. UrbanPop is less correlated with the other three. Additionally, states with large positive scores on the first PC, such as California, Nevada, and Florida, have high crime rates while North Dakota how low crime rates. California has a high score on the second PC which indicates a high level of urbanization while the opposite is true for Mississippi. States close to zero on both components, such as Indiana, have approx. average levels of both crime and urbanization.
+In the plot below, the PC scores and loading vectors are displayed in a single plot. Equal weight for Rape, Assault, and Murder are displayed for the first PC; thus, this component corresponds to a measure of overall rates of serious crimes. The second PC places more weight on UrbanPop; thus, this component roughly corresponds to level of urbanization of the state. Further, Murder, Assault, and Rape are located class to one another, thus correlated. UrbanPop is less correlated with the other three. Additionally, states with large positive scores on the first PC, such as California, Nevada, and Florida, have high crime rates while North Dakota how low crime rates. California has a high score on the second PC which indicates a high level of urbanization while the opposite is true for Mississippi. States close to zero on both components, such as Indiana, have approx. average levels of both crime and urbanization.
 
 Take-aways from biplot:
 
 \begin{itemize}
 \item Distinguishes which variables correspond most to each PC.
-\item Correlation between variables; those closests and in direction are most correlated
+\item Correlation between variables; those closest and in direction are most correlated
 \item Groups (states) that relate to rates of variables.
 \end{itemize}
 
@@ -1887,7 +1887,7 @@ An alternative interpretation for principal components can also be useful: princ
 
 The appeal of this interpretation is clear: we seek a single dimension of the data that lies as close as possible to all of the data points, since such a line will likely provide a good summary of the data.
 
-Together the first M principal component score vectors and the first M principal component loading vectors provide the best M-dimensional approximation (in terms of Euclidean distance) to the ith observation $x_{ij}$.
+Together the first M principal component score vectors and the first M principal component loading vectors provide the best M-dimensional approximation (in terms of Euclidean distance) to the $i$th observation $x_{ij}$.
 
 \begin{center}
 \includegraphics[width = 5in]{figures/pca_1}
@@ -1903,7 +1903,7 @@ We have already mentioned that before PCA is performed, the variables should be 
 \includegraphics[width = 5in]{figures/pca_2}
 \end{center}
 
-In certain settings, however, the variables may be measured in the same units. In this case, we might not wish to scale the variables to have stan- dard deviation one before performing PCA. For instance, suppose that the variables in a given data set correspond to expression levels for p genes. Then since expression is measured in the same “units” for each gene, we might choose not to scale the genes to each have standard deviation one.
+In certain settings, however, the variables may be measured in the same units. In this case, we might not wish to scale the variables to have standard deviation one before performing PCA. For instance, suppose that the variables in a given data set correspond to expression levels for p genes. Then since expression is measured in the same “units” for each gene, we might choose not to scale the genes to each have standard deviation one.
 
 \paragraph{Uniqueness of the Principal Components}
 
@@ -1942,7 +1942,7 @@ Differences between PCA and Clustering:
 
 K-means clustering, we seek to partition the observations into a pre-specified number of clusters. On the other hand, in hierarchical clustering, we do not know in advance how many clusters we want; in fact, we end up with a tree-like visual representation of the observations, called a dendrogram.
 
-In general, we can cluster observations on the basis of the features in order to identify subgroups among the observations, or we can cluster fea- tures on the basis of the observations in order to discover subgroups among the features.
+In general, we can cluster observations on the basis of the features in order to identify subgroups among the observations, or we can cluster features on the basis of the observations in order to discover subgroups among the features.
 
 \subsubsection{K Means Clustering}
 
@@ -1974,7 +1974,7 @@ $$
 \includegraphics[width = 5in]{figures/kmeans_fig2}
 \end{center}
 
-Because the K-means algorithm finds a local rather than a global opti- mum, the results obtained will depend on the initial (random) cluster as- signment of each observation. For this reason, it is important to run the algorithm multiple times from different random and choose one for which the optimization problem is the smallest.
+Because the K-means algorithm finds a local rather than a global optimum, the results obtained will depend on the initial (random) cluster assignment of each observation. For this reason, it is important to run the algorithm multiple times from different random and choose one for which the optimization problem is the smallest.
 
 \begin{center}
 \includegraphics[width = 5in]{figures/kmeans_fig3}
@@ -1982,7 +1982,7 @@ Because the K-means algorithm finds a local rather than a global opti- mum, the 
 
 \subsubsection{Hierarchical Clustering}
 
-One potential disadvantage of K-means clustering is that it requires us to pre-specify the number of clusters K. Hierarchical clustering is an alter- native approach which does not require that we commit to a particular choice of K. Hierarchical clustering has an added advantage over K-means clustering in that it results in an attractive tree-based representation of the observations, called a dendrogram.
+One potential disadvantage of K-means clustering is that it requires us to pre-specify the number of clusters K. Hierarchical clustering is an alternative approach which does not require that we commit to a particular choice of K. Hierarchical clustering has an added advantage over K-means clustering in that it results in an attractive tree-based representation of the observations, called a dendrogram.
 
 \begin{center}
 \includegraphics[width = 5in]{figures/hclustering_fig1}
@@ -2002,10 +2002,60 @@ The term hierarchical refers to the fact that clusters obtained by cutting the d
 
 A very attractive aspect of hierarchical clustering: one single dendrogram can be used to obtain any number of clusters. 
 
-A problem arises when using heirarchical clustering when the split is greater than the realistic split, such as dividing men and women into three groups. Therefore, in this situation, hierarchical clustering can sometimes yield worse results than K-means clustering.
+A problem arises when using hierarchical clustering when the split is greater than the realistic split, such as dividing men and women into three groups. Therefore, in this situation, hierarchical clustering can sometimes yield worse results than K-means clustering.
 
 \paragraph{The Hierarchical Clustering Algorithm}
 
+The hierarchical clustering dendrogram is obtained via an extremely simple algorithm. We begin by defining some sort of dissimilarity measure between each pair of observations. Most often, Euclidean distance is used; we will discuss the choice of dissimilarity measure later in this chapter.
 
+\begin{center}
+\includegraphics[width = 5in]{figures/hclustering_fig3}
+\end{center}
 
+\begin{center}
+\includegraphics[width = 5in]{figures/hclustering_fig4}
+\end{center}
 
+\begin{center}
+\includegraphics[width = 5in]{figures/hclustering_fig5}
+\end{center}
+
+\paragraph{Choice of Dissimilarity Measure}
+
+Thus far, the examples in this chapter have used Euclidean distance as the dissimilarity measure. But sometimes other dissimilarity measures might be preferred. For example, correlation-based distance considers two observations to be similar if their features are highly correlated, even though the observed values may be far apart in terms of Euclidean distance.
+
+The choice of dissimilarity measure is very important, as it has a strong effect on the resulting dendrogram. In general, careful attention should be paid to the type of data being clustered and the scientific question at hand. These considerations should determine what type of dissimilarity measure is used for hierarchical clustering.
+
+In addition to carefully selecting the dissimilarity measure used, one must also consider whether or not the variables should be scaled to have standard deviation one before the dissimilarity between the observations is computed.
+
+\begin{center}
+\includegraphics[width = 5in]{figures/hclustering_fig6}
+\end{center}
+
+\subsubsection{Practical Issues in Clustering}
+
+There are a number of issues that arise in performing clustering:
+
+\paragraph{Small Decisions with Big Consequences}
+
+\begin{itemize}
+\item Should obs or features be standardized?
+\item Hierarchical clustering: (1) Choice of dissimilarity measure? (2) Type of linkage? (3) Where should dendrogram be cut
+\item K-means clustering: how many clusters should we look for in the data?
+\end{itemize}
+
+Each of these decisions can have a strong impact on the results obtained. In practice, we try several different choices, and look for the one with the most useful or interpretable solution. With these methods, there is no single right answer—any solution that exposes some interesting aspects of the data should be considered.
+
+\paragraph{Validating the Clusters Obtained}
+
+Any time clustering is performed on a data set we will find clusters. But we really want to know whether the clusters that have been found represent true subgroups in the data, or whether they are simply a result of \textit{clustering the noise}. Techniques exist for assigning a p-value to a cluster, but no consensus has been reached.
+
+\paragraph{Other Considerations in Clustering}
+
+Since K- means and hierarchical clustering force every observation into a cluster, the clusters found may be heavily distorted due to the presence of outliers that do not belong to any cluster. Mixture models are an attractive approach for accommodating the presence of such outliers. Such as soft version of K-means clustering.
+
+Clustering methods generally are not very robust to instability to the data.
+
+\paragraph{A Tempered Approach to Interpreting the Results of Clustering}
+
+We mentioned that small decisions in how clustering is performed, such as how the data are standardized and what type of linkage is used, can have a large effect on the results. Therefore, we recommend performing clustering with different choices of these parameters, and looking at the full set of results in order to see what patterns consistently emerge. Since clustering can be non-robust, we recommend clustering subsets of the data in order to get a sense of the robustness of the clusters obtained. Most importantly, we must be careful about how the results of a clustering analysis are reported. These results should not be taken as the absolute truth about a data set. Rather, they should constitute a starting point for the development of a scientific hypothesis and further study, preferably on an independent data set.
