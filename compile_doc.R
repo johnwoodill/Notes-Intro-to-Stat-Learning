@@ -1,10 +1,10 @@
-setwd("/Users/john/pCloud Drive/Projects/Notes-Intro-to-Stat-Learning/")
-
+pwd <- getwd()
+setwd(pwd)
 # Header file with abstract
-top <- "/Users/john/pCloud Drive/Projects/Intro to Stat Learning/header.tex"
+top <- paste0(pwd, "/header.tex")
 
 # Document text
-doc <-  "/Users/john/pCloud Drive/Projects/Intro to Stat Learning/notes.txt"
+doc <-  paste0(pwd, "/notes.txt")
 
 # Merge config file
 system("cat header.tex notes.txt > Notes-Intro-to-Stat-Learning.tex")
